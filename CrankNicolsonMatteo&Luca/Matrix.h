@@ -36,6 +36,8 @@ namespace m2 {
         // Assignment operator
         Matrix& operator=(const Matrix& m1);
 
+        // Matrix extraction
+        Matrix extract(int index);
     };
 
     // Stream output operator

@@ -9,6 +9,7 @@ namespace m2 {
         : nl_(nl), nc_(nc), data_(nl* nc, 0.0) {
     }
 
+
     // Destructor (handled by std::vector)
     Matrix::~Matrix() {}
 
@@ -47,6 +48,18 @@ namespace m2 {
             data_ = m1.data_;
         }
         return *this;
+    }
+
+    // Matrix extraction (this function could vary depending on the specific requirement)
+    Matrix Matrix::extract(int index) {
+        if (index < 0 || index >= nl_) {
+            throw std::out_of_range("Invalid index");
+        }
+        Matrix result(1, nc_);
+        for (int j = 0; j < nc_; ++j) {
+            result(0, j) = (*this)(index, j);
+        }
+        return result;
     }
 
     // Output stream operator

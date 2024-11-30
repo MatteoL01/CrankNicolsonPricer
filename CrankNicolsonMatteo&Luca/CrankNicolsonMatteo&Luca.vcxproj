@@ -127,18 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CrankNicolson.cpp" />
+    <ClCompile Include="Diffmethod.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Option.cpp" />
-    <ClCompile Include="Pricer.cpp" />
-    <ClCompile Include="TridiagonalMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CrankNicolson.h" />
+    <ClInclude Include="Diffmethod.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Pricer.h" />
-    <ClInclude Include="TridiagonalMatrix.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Option.h" />
   </ItemGroup>

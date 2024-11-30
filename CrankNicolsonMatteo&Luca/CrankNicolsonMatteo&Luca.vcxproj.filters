@@ -21,16 +21,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CrankNicolson.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TridiagonalMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pricer.cpp">
+    <ClCompile Include="Diffmethod.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,16 +35,10 @@
     <ClInclude Include="Option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CrankNicolson.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TridiagonalMatrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pricer.h">
+    <ClInclude Include="Diffmethod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

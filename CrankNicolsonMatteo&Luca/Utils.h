@@ -66,7 +66,7 @@ std::vector<float>& operator+=(std::vector<float>& lhs, const std::vector<float>
         lhs[i] += rhs[i];
     }
     return lhs;
-}
+        }
 
 // Using the Crout algorithm to calculate Upper and Lower decompostion of T2 and solve the system
 void crout(m2::Matrix& T2, std::vector<float>& W, std::vector<float>& V, m2::Matrix & result, unsigned int M)
@@ -107,6 +107,74 @@ double computeAverageRate(const std::vector<std::pair<double, double>>& rates, d
     return totalRate / totalWeight;
 }
 
+void thomas_alg(std::vector<float>& x, const std::vector<float>& a, const std::vector<float>& b, const std::vector<float>& c, const std::vector<float>& d, int n) {
+    // Initialize w and g as vectors
+    std::vector<float> w(n - 1);
+    std::vector<float> g(n);
+
+    // Forward sweep
+    w[0] = c[0] / b[0];
+    g[0] = d[0] / b[0];
+
+    for (int i = 1; i < n - 1; i++) {
+        w[i] = c[i] / (b[i] - a[i - 1] * w[i - 1]);
+    }
+
+    for (int i = 1; i < n; i++) {
+        g[i] = (d[i] - a[i - 1] * g[i - 1]) / (b[i] - a[i - 1] * w[i - 1]);
+    }
+
+    // Backward substitution
+    x[n - 1] = g[n - 1];
+    for (int i = n - 2; i >= 0; i--) {
+        x[i] = g[i] - w[i] * x[i + 1];
+    }
+}
+
+void matmul_tridiag(std::vector<float>& x, const std::vector<float>& a, const std::vector<float>& b, const std::vector<float>& c, int n) {
+    float x_2;
+    float x_1 = x[0];
+    x[0] = b[0] * x[0] + c[0] * x[1];
+
+    for (int i = 1; i < n - 1; ++i) {
+        x_2 = x[i];
+        x[i] = a[i - 1] * x_1 + b[i] * x[i] + c[i] * x[i + 1];
+        x_1 = x_2;
+    }
+    x[n - 1] = a[n - 2] * x_1 + b[n - 1] * x[n - 1];
+}
+
+
+void init_A(std::vector<float>& A_a, std::vector<float>& A_b, std::vector<float>& A_c, const std::vector<float>& S, int N, const std::vector<std::pair<double, double>>& rates, float sigma, float dt, float h) {
+    for (int j = 1; j < N; ++j) {
+        // Find the interest rate corresponding to the current time step j
+        double r = getInterestRate(rates, j * dt);  // assuming time steps are indexed by dt
+
+        A_a[j - 1] = (r * S[j]) / (4 * h) - (sigma * sigma * S[j] * S[j]) / (4 * h * h);
+        A_b[j] = (1 / dt + r + (sigma * sigma * S[j] * S[j]) / (2 * h * h));
+        A_c[j] = -(r * S[j]) / (4 * h) - (sigma * sigma * S[j] * S[j]) / (4 * h * h);
+    }
+    A_c[0] = 0.0f;
+    A_a[N - 1] = 0.0f;
+    A_b[0] = 1.0f;
+    A_b[N] = 1.0f;
+}
+
+
+void init_B(std::vector<float>& B_a, std::vector<float>& B_b, std::vector<float>& B_c, const std::vector<float>& S, int N, const std::vector<std::pair<double, double>>& rates, float sigma, float dt, float h) {
+    for (int j = 1; j < N; ++j) {
+        // Find the interest rate corresponding to the current time step j
+        double r = getInterestRate(rates, j * dt);  // assuming time steps are indexed by dt
+
+        B_a[j - 1] = -(r * S[j]) / (4 * h) + (sigma * sigma * S[j] * S[j]) / (4 * h * h);
+        B_b[j] = 1 / dt - (sigma * sigma * S[j] * S[j]) / (2 * h * h);
+        B_c[j] = (r * S[j]) / (4 * h) + (sigma * sigma * S[j] * S[j]) / (4 * h * h);
+    }
+    B_c[0] = 0.0f;
+    B_a[N - 1] = 0.0f;
+    B_b[0] = 1.0f;
+    B_b[N] = 1.0f;
+}
 
 
 

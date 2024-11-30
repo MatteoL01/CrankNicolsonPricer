@@ -1,4 +1,5 @@
 #include "Option.h"
+#include "CrankNicolson.h"
 #include "utils.h"  
 #include "Matrix.h"
 #include <iostream>

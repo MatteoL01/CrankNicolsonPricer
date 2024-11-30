@@ -9,6 +9,23 @@ namespace m2 {
         : nl_(nl), nc_(nc), data_(nl* nc, 0.0) {
     }
 
+    // Constructor with dimensions, initializes with a fill value
+    Matrix::Matrix(int nl, int nc, int fill)
+        : nl_(nl), nc_(nc), data_(nl* nc, static_cast<double>(fill)) {
+    }
+
+    // Constructor with size and diagonal matrix
+    Matrix::Matrix(int size, const Matrix& diag, int where, int fill)
+        : nl_(size), nc_(size), data_(size* size, 0.0)
+    {
+        if (where == 0) {  // Main diagonal
+            for (int i = 0; i < size; ++i) {
+                (*this)(i, i) = diag(i, i);
+            }
+        }
+        // Implement additional diagonal placements based on 'where'
+    }
+
     // Destructor (handled by std::vector)
     Matrix::~Matrix() {}
 
@@ -47,6 +64,18 @@ namespace m2 {
             data_ = m1.data_;
         }
         return *this;
+    }
+
+    // Matrix extraction (this function could vary depending on the specific requirement)
+    Matrix Matrix::extract(int index) {
+        if (index < 0 || index >= nl_) {
+            throw std::out_of_range("Invalid index");
+        }
+        Matrix result(1, nc_);
+        for (int j = 0; j < nc_; ++j) {
+            result(0, j) = (*this)(index, j);
+        }
+        return result;
     }
 
     // Output stream operator

@@ -66,14 +66,14 @@ namespace m2 {
     std::ostream& operator<<(std::ostream& st, const Matrix& m1) {
         for (int i = 0; i < m1.get_nl(); ++i) {
             for (int j = 0; j < m1.get_nc(); ++j) {
-                st << m1(i, j) << " ";
+                st << std::setw(2) << std::setprecision(3) << m1(i, j) << " ";
             }
             st << std::endl;
         }
         return st;
     }
 
-    std::vector<float> m2::operator*(const m2::Matrix& mat, const std::vector<float>& vec) {
+    std::vector<float> operator*(const Matrix& mat, const std::vector<float>& vec) {
         if (mat.get_nc() != vec.size()) {
             throw std::invalid_argument("Matrix columns must match vector size.");
         }

@@ -48,8 +48,8 @@ namespace m2 {
             // Read other parameters
             std::getline(file, line); T_ = std::stod(line);
             std::getline(file, line); K_ = std::stod(line);
-            std::getline(file, line); timeDiscr_ = std::stoul(line);
-            std::getline(file, line); spotDiscr_ = std::stoul(line);
+            std::getline(file, line); timeDiscr_ = std::stoi(line);
+            std::getline(file, line); spotDiscr_ = std::stoi(line);
             std::getline(file, line); S0_ = std::stod(line);
             std::getline(file, line); sigma_ = std::stod(line);
             std::getline(file, line); time_steps_ = std::stoul(line);

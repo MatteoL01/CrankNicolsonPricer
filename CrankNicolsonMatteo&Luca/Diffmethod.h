@@ -9,30 +9,54 @@
 
 namespace m2
 {
-	class American : public Option
+	class American
 	{
 	private:
 		Matrix values_;
-		unsigned int N_ = timeDiscr_;
-		unsigned int M_ = spotDiscr_;
+		bool call_; // 1 for call, 0 for put
+		double T_;           // Maturity date
+		double K_;           // Strike price
+		unsigned int N_; // Discretization in time
+		unsigned int M_; // Discretization in spot
+		double S0_;         // Initial price of the underlying
+		double sigma_;       // Volatility
+		std::vector<std::pair<float, float>> rates_;  // Interest rate as (time, rate)
+
 
 	public:
-		American();
+		American(Option & opt);
 		
 		void priceCall();
 		void pricePut();
+
+		Matrix get_val() { return values_; }
+
+		void printMatrix() {
+			std::cout << "Matrix Values: \n" << values_ << std::endl;
+		}
+
 	};
 
-	class European : public Option
+	class European
 	{
 	private:
 		Matrix values_;
+		bool call_; // 1 for call, 0 for put
+		double T_;           // Maturity date
+		double K_;           // Strike price
+		unsigned int N_; // Discretization in time
+		unsigned int M_; // Discretization in spot
+		double S0_;         // Initial price of the underlying
+		double sigma_;       // Volatility
+		std::vector<std::pair<float, float>> rates_;  // Interest rate as (time, rate)
 
 	public:
-		European();
+		European(Option& opt);
 
 		void priceCall();
 		void pricePut();
+
+		Matrix get_val() {return values_; }
 	};
 }
 

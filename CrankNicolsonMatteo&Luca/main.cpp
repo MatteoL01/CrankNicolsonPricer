@@ -1,6 +1,6 @@
 #include "Option.h"
-#include "CrankNicolson.h"
-#include "utils.h"  
+#include "Diffmethod.h"
+#include "Utils.h"  
 #include "Matrix.h"
 #include <iostream>
 #include <iomanip> // For formatting
@@ -12,6 +12,19 @@ int main() {
         opt.openInput("C:/Users/matte/Documents/option_data.txt");
 
         opt.printParameters();
+
+        m2::Matrix result;
+
+        m2::American ame(opt);
+
+        if (opt.getCallPut())
+        {
+            ame.priceCall();
+        }
+
+        else { ame.pricePut();}
+
+        
 
     }
     catch (const std::exception& e) {

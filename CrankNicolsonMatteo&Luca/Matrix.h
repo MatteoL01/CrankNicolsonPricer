@@ -13,7 +13,7 @@ namespace m2 {
     protected:
         int nl_;  // number of rows
         int nc_;  // number of columns
-        std::vector<float> data_;  // stores matrix elements in a single 1D array
+        std::vector<double> data_;  // stores matrix elements in a single 1D array
 
     public:
         // Constructors
@@ -31,14 +31,12 @@ namespace m2 {
         int get_nc() const;
 
         // Access operators
-        float operator()(unsigned int i, unsigned int j) const;
-        float& operator()(unsigned int i, unsigned int j);
+        double operator()(unsigned int i, unsigned int j) const;
+        double& operator()(unsigned int i, unsigned int j);
 
         // Assignment operator
         Matrix& operator=(const Matrix& m1);
 
-        // Matrix extraction
-        Matrix extract(int index);
     };
 
     // Stream output operator
@@ -51,7 +49,7 @@ namespace m2 {
     Matrix operator*(const double d, const Matrix& m1);
 
     // Matrix-vector multiplication operator
-    std::vector<float> operator*(const Matrix& mat, const std::vector<float>& vec);
+    std::vector<double> operator*(const Matrix& mat, const std::vector<double>& vec);
 
 } // namespace m2
 

@@ -24,7 +24,7 @@ int main() {
 
         else { ame.pricePut();}
 
-        
+        std::cout << ame.getPrice() << std::endl;
 
     }
     catch (const std::exception& e) {

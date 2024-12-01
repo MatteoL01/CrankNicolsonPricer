@@ -21,7 +21,7 @@ namespace m2 {
         return (a > b) ? a : b;
     }
 
-    float interpolateRate(float t, const std::vector<std::pair<float, float>>& rates) {
+    float interpolateRate(double t, const std::vector<std::pair<double, double>>& rates) {
         if (t < rates.front().first) {
             return rates.front().second; // Clamp to the first rate
         }
@@ -40,7 +40,7 @@ namespace m2 {
         return rates.back().second; // Redundant but ensures completeness
     }
 
-    std::vector<float>& operator+=(std::vector<float>& lhs, const std::vector<float>& rhs) {
+    std::vector<double>& operator+=(std::vector<double>& lhs, const std::vector<double>& rhs) {
         if (lhs.size() != rhs.size()) {
             throw std::invalid_argument("Vectors must have the same size for addition.");
         }
@@ -51,7 +51,7 @@ namespace m2 {
         return lhs;
     }
 
-    void crout(Matrix& T2, std::vector<float>& W, std::vector<float>& V, int M) {
+    void crout(Matrix& T2, std::vector<double>& W, std::vector<double>& V, int M) {
         M = M - 1; // we want dimension M - 1
 
         Matrix L(M, M), U(M, M);

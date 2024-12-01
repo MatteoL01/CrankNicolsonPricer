@@ -22,13 +22,13 @@ namespace m2 {
 	float max(float a, float b);
 
 	// Linear interpolation of interest rate
-	float interpolateRate(float t, const std::vector<std::pair<float, float>>& rates);
+	float interpolateRate(double t, const std::vector<std::pair<double, double>>& rates);
 
 	// Overload the += operator for std::vector<float>
-	std::vector<float>& operator+=(std::vector<float>& lhs, const std::vector<float>& rhs);
+	std::vector<double>& operator+=(std::vector<double>& lhs, const std::vector<double>& rhs);
 
 	// Using the Crout algorithm to calculate Upper and Lower decomposition of T2 and solve the system
-	void crout(Matrix& T2, std::vector<float>& W, std::vector<float>& V, int M);
+	void crout(Matrix& T2, std::vector<double>& W, std::vector<double>& V, int M);
 
 	// Compute the average rate over time using the piecewise rate structure
 	double computeAverageRate(const std::vector<std::pair<double, double>>& rates, double T);

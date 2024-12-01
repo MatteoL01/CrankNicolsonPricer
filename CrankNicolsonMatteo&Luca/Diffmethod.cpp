@@ -14,14 +14,15 @@ namespace m2
         values_ = Matrix(N_+1,M_+1);
 	}
 
+    
     void American::pricePut() {
         
 
-        float Smax = 2 * K_;
-        float dt = T_ / N_;
-        float ds = Smax / M_;
+        double Smax = 2 * K_;
+        double dt = T_ / N_;
+        double ds = Smax / M_;
 
-        std::vector<float> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
+        std::vector<double> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
 
         for (unsigned int i = 0; i < (N_+1); i++)
         {   
@@ -35,7 +36,7 @@ namespace m2
         Matrix T1(M_ - 1, M_ - 1), T2(M_ - 1, M_ - 1);
 
         // create vector of V and k (boundary times)
-        std::vector<float> V(M_-1), k(M_-1);
+        std::vector<double> V(M_-1), k(M_-1);
 
         // Fill k vector
         k[0] = a[0] * Smax;
@@ -53,14 +54,14 @@ namespace m2
 
 
         // vector W = T1 * V + k
-        std::vector<float> W(M_-1);
+        std::vector<double> W(M_-1);
 
         
         for (int n = N_; n > 0; n--)
         {
             
             // interpolate the interest rate
-            float current_rate = interpolateRate(n * dt, rates_);
+            double current_rate = interpolateRate(n * dt, rates_);
 
             for (unsigned int j = 0; j < (M_ - 1); j++) {
 
@@ -100,18 +101,19 @@ namespace m2
 
         }
 
-        
+        unsigned int pos = S0_ / ds;
+        price_ = values_(N_, pos);
         printMatrix();
     }
 
     void American::priceCall() {
 
 
-        float Smax = 2 * S0_;
-        float dt = T_ / N_;
-        float ds = Smax / M_;
+        double Smax = 2 * S0_;
+        double dt = T_ / N_;
+        double ds = Smax / M_;
 
-        std::vector<float> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
+        std::vector<double> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
 
         for (unsigned int i = 0; i < (N_ + 1); i++)
         {
@@ -125,7 +127,7 @@ namespace m2
         Matrix T1(M_ - 1, M_ - 1), T2(M_ - 1, M_ - 1);
 
         // create vector of V and k (boundary times)
-        std::vector<float> V(M_ - 1), k(M_ - 1);
+        std::vector<double> V(M_ - 1), k(M_ - 1);
 
         // Fill k vector
         for (unsigned int i = 0; i < (M_ - 2); i++)
@@ -142,14 +144,14 @@ namespace m2
         }
 
         // vector W = T1 * V + k
-        std::vector<float> W(M_ - 1);
+        std::vector<double> W(M_ - 1);
 
 
         for (int n = N_; n > 0; n--)
         {
 
             // interpolate the interest rate
-            float current_rate = interpolateRate(n * dt, rates_);
+            double current_rate = interpolateRate(n * dt, rates_);
 
             for (unsigned int j = 0; j < (M_ - 1); j++) {
 
@@ -184,12 +186,14 @@ namespace m2
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 V[i] = max(V[i], ds * (i + 1) - K_); // american call payoff 
+                if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i + 1) = V[i];
             }
 
         }
 
-
+        unsigned int pos = S0_ / ds;
+        price_ = values_(N_, pos);
         printMatrix();
     }
 

@@ -20,8 +20,9 @@ namespace m2
 		unsigned int M_; // Discretization in spot
 		double S0_;         // Initial price of the underlying
 		double sigma_;       // Volatility
-		std::vector<std::pair<float, float>> rates_;  // Interest rate as (time, rate)
+		std::vector<std::pair<double, double>> rates_;  // Interest rate as (time, rate)
 
+		double price_;
 
 	public:
 		American(Option & opt);
@@ -30,6 +31,8 @@ namespace m2
 		void pricePut();
 
 		Matrix get_val() { return values_; }
+
+		double getPrice() const { return price_;}
 
 		void printMatrix() {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;
@@ -48,8 +51,9 @@ namespace m2
 		unsigned int M_; // Discretization in spot
 		double S0_;         // Initial price of the underlying
 		double sigma_;       // Volatility
-		std::vector<std::pair<float, float>> rates_;  // Interest rate as (time, rate)
+		std::vector<std::pair<double, double>> rates_;  // Interest rate as (time, rate)
 
+		double price_;
 	public:
 		European(Option& opt);
 
@@ -57,6 +61,12 @@ namespace m2
 		void pricePut();
 
 		Matrix get_val() {return values_; }
+
+		double getPrice() const { return price_; }
+
+		void printMatrix() {
+			std::cout << "Matrix Values: \n" << values_ << std::endl;
+		}
 	};
 }
 

@@ -18,7 +18,7 @@ namespace m2 {
         double S0_;         // Initial price of the underlying
         double sigma_;       // Volatility
         unsigned int time_steps_; // Interest rate steps
-        std::vector<std::pair<float, float>> rates_;  // Interest rate as (time, rate)
+        std::vector<std::pair<double, double>> rates_;  // Interest rate as (time, rate)
 
         void validateInput(); // Validate parameters
 
@@ -44,7 +44,7 @@ namespace m2 {
         unsigned int getTimeDiscr() const { return timeDiscr_; }
         unsigned int getSpotDiscr() const { return spotDiscr_; }
         unsigned int getTimeSteps() const { return time_steps_; }
-        const std::vector<std::pair<float, float>>& getRates() const { return rates_; }
+        const std::vector<std::pair<double, double>>& getRates() const { return rates_; }
     };
 
     

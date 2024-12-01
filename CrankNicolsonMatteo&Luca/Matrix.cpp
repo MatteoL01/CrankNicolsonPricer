@@ -25,7 +25,7 @@ namespace m2 {
     int Matrix::get_nc() const { return nc_; }
 
     // Access operator (const version)
-    float Matrix::operator()(unsigned int i, unsigned int j) const {
+    double Matrix::operator()(unsigned int i, unsigned int j) const {
         if (i >= nl_ || j >= nc_ || i < 0 || j < 0) {
             throw std::out_of_range("Index out of bounds");
         }
@@ -33,7 +33,7 @@ namespace m2 {
     }
 
     // Access operator (non-const version)
-    float& Matrix::operator()(unsigned int i, unsigned int j) {
+    double& Matrix::operator()(unsigned int i, unsigned int j) {
         if (i >= nl_ || j >= nc_ || i < 0 || j < 0) {
             throw std::out_of_range("Index out of bounds");
         }
@@ -50,18 +50,7 @@ namespace m2 {
         return *this;
     }
 
-    // Matrix extraction (this function could vary depending on the specific requirement)
-    Matrix Matrix::extract(int index) {
-        if (index < 0 || index >= nl_) {
-            throw std::out_of_range("Invalid index");
-        }
-        Matrix result(1, nc_);
-        for (int j = 0; j < nc_; ++j) {
-            result(0, j) = (*this)(index, j);
-        }
-        return result;
-    }
-
+    
     // Output stream operator
     std::ostream& operator<<(std::ostream& st, const Matrix& m1) {
         for (int i = 0; i < m1.get_nl(); ++i) {
@@ -73,12 +62,12 @@ namespace m2 {
         return st;
     }
 
-    std::vector<float> operator*(const Matrix& mat, const std::vector<float>& vec) {
+    std::vector<double> operator*(const Matrix& mat, const std::vector<double>& vec) {
         if (mat.get_nc() != vec.size()) {
             throw std::invalid_argument("Matrix columns must match vector size.");
         }
 
-        std::vector<float> result(mat.get_nl(), 0.0f); // Initialize result vector with 0s
+        std::vector<double> result(mat.get_nl(), 0.0f); // Initialize result vector with 0s
 
         for (int i = 0; i < mat.get_nl(); ++i) {
             for (int j = 0; j < mat.get_nc(); ++j) {

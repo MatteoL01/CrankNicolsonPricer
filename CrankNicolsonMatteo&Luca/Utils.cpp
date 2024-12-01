@@ -88,24 +88,42 @@ namespace m2 {
     }
 
     double computeAverageRate(const std::vector<std::pair<double, double>>& rates, double T) {
-        if (rates.empty()) throw std::runtime_error("Rates vector is empty");
+        if (rates.empty())
+            throw std::runtime_error("Rates vector is empty");
+
+        if (T <= rates.front().first)
+            return rates.front().second; // Return the first rate for times before the first timestamp
 
         double totalRate = 0.0;
         double totalWeight = 0.0;
 
         for (size_t i = 1; i < rates.size(); ++i) {
-            double timeDiff = rates[i].first - rates[i - 1].first;
-            totalRate += rates[i - 1].second * timeDiff;
+            double start = rates[i - 1].first;
+            double end = rates[i].first;
+            double rate = rates[i - 1].second;
+
+            if (T <= start)
+                break; // No contribution from intervals completely after T
+
+            double timeDiff = std::min(end, T) - start; // Consider up to T if within this interval
+            totalRate += rate * timeDiff;
+            totalWeight += timeDiff;
+
+            if (T <= end)
+                break; // Stop after reaching T
+        }
+
+        // Handle the remaining time beyond the last known rate
+        if (T > rates.back().first) {
+            double timeDiff = T - rates.back().first;
+            totalRate += rates.back().second * timeDiff;
             totalWeight += timeDiff;
         }
 
-        // Account for time remaining till T
-        double lastTime = rates.back().first;
-        if (T > lastTime) {
-            totalRate += rates.back().second * (T - lastTime);
-            totalWeight += (T - lastTime);
-        }
+        if (totalWeight == 0.0)
+            throw std::runtime_error("Total weight is zero, invalid time intervals");
 
         return totalRate / totalWeight;
     }
+
 }

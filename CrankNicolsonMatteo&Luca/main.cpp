@@ -9,23 +9,49 @@ int main() {
     try {
         // Load option parameters
         m2::Option opt;
-        opt.openInput("C:/Users/matte/Documents/option_data.txt");
+        opt.openInput("option_data.txt");
 
         opt.printParameters();
 
-        m2::Matrix result;
-
-        m2::American ame(opt);
-
-        if (opt.getCallPut())
+        if (opt.getAmerican())
         {
-            ame.priceCall();
+            m2::American ame(opt);
+
+            if (opt.getCallPut())
+            {
+                ame.priceCall();
+            }
+
+            else { ame.pricePut(); }
+
+            std::cout << "Crank Nicolson price:" << std::endl;
+            std::cout << ame.getPrice() << std::endl;
+
+            std::cout << "B-S price:" << std::endl;
+            std::cout << m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma()) << std::endl;
+
         }
 
-        else { ame.pricePut();}
+        else
+        {
+            m2::European eur(opt);
 
-        std::cout << ame.getPrice() << std::endl;
+            if (opt.getCallPut())
+            {
+                eur.priceCall();
+            }
 
+            else { eur.pricePut(); }
+
+            std::cout << "Crank Nicolson price:" << std::endl;
+            std::cout << eur.getPrice() << std::endl;
+
+            std::cout << "B-S price:" << std::endl;
+            std::cout << m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma()) << std::endl;
+
+        }
+
+        
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";

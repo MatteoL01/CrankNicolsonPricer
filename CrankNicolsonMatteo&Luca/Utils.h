@@ -1,6 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
-
+#include "Diffmethod.h"
 #include "Matrix.h"
 #include <cmath>
 #include <vector>
@@ -32,6 +32,9 @@ namespace m2 {
 
 	// Compute the average rate over time using the piecewise rate structure
 	double computeAverageRate(const std::vector<std::pair<double, double>>& rates, double T);
+
+	// Write the results of the calculations in a txt file 
+	void writeOutputTxt();
 }
 
 #endif // !UTILS_H

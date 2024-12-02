@@ -53,4 +53,4 @@ namespace m2 {
 
 } // namespace m2
 
-#endif // MATRIX_H
+#endif // !MATRIX_H

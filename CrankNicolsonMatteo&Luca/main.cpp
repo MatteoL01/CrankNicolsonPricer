@@ -22,7 +22,7 @@ int main() {
                 ame.priceCall();
             }
 
-            else { ame.pricePut(); }
+            else { ame.pricePut();}
 
             std::cout << "Crank Nicolson price:" << std::endl;
             std::cout << ame.getPrice() << std::endl;
@@ -51,6 +51,7 @@ int main() {
 
         }
 
+     
         
     }
     catch (const std::exception& e) {

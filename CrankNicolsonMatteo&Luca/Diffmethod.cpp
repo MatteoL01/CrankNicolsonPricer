@@ -1,22 +1,25 @@
 #include "Diffmethod.h"
 
 namespace m2
-{
-	American::American(Option& opt) : call_(opt.getCallPut()), T_(opt.getT()), K_(opt.getK()), N_(opt.getTimeDiscr()), M_(opt.getSpotDiscr()),
-        S0_(opt.getS0()), sigma_(opt.getSigma()), rates_(opt.getRates()), price_(0.0)
-	{   
-        values_ = Matrix(N_+1, M_+1);
-	}
-	
-	European::European(Option& opt) : call_(opt.getCallPut()), T_(opt.getT()), K_(opt.getK()), N_(opt.getTimeDiscr()), M_(opt.getSpotDiscr()),
-        S0_(opt.getS0()), sigma_(opt.getSigma()), rates_(opt.getRates()), price_(0.0)
-	{
-        values_ = Matrix(N_+1,M_+1);
-	}
+{   
+    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0)
+    {   
+        // initialize the matrix of price and greeks
+        values_ = Matrix(N_ + 1, M_ + 1);
+        delta_ = Matrix(N_ + 1, M_ + 1);
+
+    }
+
+    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0)
+    {
+        // initialize the matrix of price and greeks
+        values_ = Matrix(N_ + 1, M_ + 1);
+        delta_ = Matrix(N_ + 1, M_ + 1);
+
+    }
 
     
     void American::pricePut() {
-        
 
         double Smax = 2 * K_;
         double dt = T_ / N_;
@@ -58,7 +61,7 @@ namespace m2
 
         
         for (int n = N_; n > 0; n--)
-        {
+        {   
             
             // interpolate the interest rate
             double current_rate = interpolateRate(n * dt, rates_);
@@ -104,6 +107,8 @@ namespace m2
         unsigned int pos = S0_ / ds;
         price_ = values_(N_, pos);
         //printMatrix();
+
+        T0prices_ = V;
     }
 
     void American::priceCall() {
@@ -194,6 +199,8 @@ namespace m2
 
         unsigned int pos = S0_ / ds;
         price_ = values_(N_, pos);
+
+        T0prices_ = V;
     }
 
     void European::pricePut()
@@ -284,6 +291,8 @@ namespace m2
         unsigned int pos = S0_ / ds;
         price_ = values_(N_, pos);
         //printMatrix();
+
+        T0prices_ = V;
     }
 
     void European::priceCall()
@@ -374,6 +383,19 @@ namespace m2
         unsigned int pos = S0_ / ds;
         price_ = values_(N_, pos);
         //printMatrix();
+
+        T0prices_ = V;
+    }
+
+    void European::calculateDelta()
+    {
+        for (unsigned int i = 1; i < N_+1; i++)
+        {
+            for (unsigned int j = 0; j < M_; j++)
+            {
+                delta_(i, j) = (values_(i - 1, j) - values_(i, j));
+            }
+        }
     }
 
 }

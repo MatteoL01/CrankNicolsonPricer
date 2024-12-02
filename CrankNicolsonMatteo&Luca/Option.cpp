@@ -8,7 +8,7 @@ namespace m2 {
 
     // Default constructor
     Option::Option()
-        : call_(0), american_(0), T_(0.0), K_(0.0), timeDiscr_(0), spotDiscr_(0),
+        : call_(0), american_(0), T_(0.0), K_(0.0), N_(0), M_(0),
         S0_(0.0), sigma_(0.0), time_steps_(0) {
     }
 
@@ -18,8 +18,8 @@ namespace m2 {
         if (T_ <= 0) throw std::invalid_argument("Maturity (T) must be greater than 0.");
         if (K_ <= 0) throw std::invalid_argument("Strike price (K) must be greater than 0.");
         if (sigma_ <= 0) throw std::invalid_argument("Volatility (sigma) must be greater than 0.");
-        if (timeDiscr_ == 0) throw std::invalid_argument("Time discretization must be greater than 0.");
-        if (spotDiscr_ == 0) throw std::invalid_argument("Spot discretization must be greater than 0.");
+        if (N_ == 0) throw std::invalid_argument("Time discretization must be greater than 0.");
+        if (M_ == 0) throw std::invalid_argument("Spot discretization must be greater than 0.");
         if (rates_.empty()) throw std::invalid_argument("Rates vector cannot be empty.");
     }
 
@@ -48,8 +48,8 @@ namespace m2 {
             // Read other parameters
             std::getline(file, line); T_ = std::stod(line);
             std::getline(file, line); K_ = std::stod(line);
-            std::getline(file, line); timeDiscr_ = std::stoi(line);
-            std::getline(file, line); spotDiscr_ = std::stoi(line);
+            std::getline(file, line); N_ = std::stoi(line);
+            std::getline(file, line); M_ = std::stoi(line);
             std::getline(file, line); S0_ = std::stod(line);
             std::getline(file, line); sigma_ = std::stod(line);
             std::getline(file, line); time_steps_ = std::stoul(line);
@@ -82,8 +82,8 @@ namespace m2 {
         std::cout << "Exercise Type: " << (american_ ? "American" : "European") << "\n";
         std::cout << "Maturity (T): " << T_ << "\n";
         std::cout << "Strike Price (K): " << K_ << "\n";
-        std::cout << "Time Discretization: " << timeDiscr_ << "\n";
-        std::cout << "Spot Discretization: " << spotDiscr_ << "\n";
+        std::cout << "Time Discretization: " << N_ << "\n";
+        std::cout << "Spot Discretization: " << M_ << "\n";
         std::cout << "Initial Price (S0): " << S0_ << "\n";
         std::cout << "Volatility (sigma): " << sigma_ << "\n";
         std::cout << "Time Steps: " << time_steps_ << "\n";

@@ -9,12 +9,12 @@
 namespace m2 {
     class Option {
     protected:
-        bool call_; // 1 for call, 0 for put
-        bool american_; // 0 for European, 1 for American
+        bool call_; // true for call, 0 for put
+        bool american_; // 0 for European, true for American
         double T_;           // Maturity date
         double K_;           // Strike price
-        unsigned int timeDiscr_; // Discretization in time
-        unsigned int spotDiscr_; // Discretization in spot
+        unsigned int N_; // Discretization in time
+        unsigned int M_; // Discretization in spot
         double S0_;         // Initial price of the underlying
         double sigma_;       // Volatility
         unsigned int time_steps_; // Interest rate steps
@@ -41,8 +41,8 @@ namespace m2 {
         double getK() const { return K_; }
         double getS0() const { return S0_; }
         double getSigma() const { return sigma_; }
-        unsigned int getTimeDiscr() const { return timeDiscr_; }
-        unsigned int getSpotDiscr() const { return spotDiscr_; }
+        unsigned int getTimeDiscr() const { return N_; }
+        unsigned int getSpotDiscr() const { return M_; }
         unsigned int getTimeSteps() const { return time_steps_; }
         const std::vector<std::pair<double, double>>& getRates() const { return rates_; }
     };
@@ -50,4 +50,4 @@ namespace m2 {
     
 }
 
-#endif // OPTION_H
+#endif // !OPTION_H

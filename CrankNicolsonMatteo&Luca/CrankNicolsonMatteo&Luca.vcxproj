@@ -136,7 +136,6 @@
   <ItemGroup>
     <ClInclude Include="Diffmethod.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Option.h" />
   </ItemGroup>

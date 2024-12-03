@@ -132,6 +132,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Diffmethod.h" />

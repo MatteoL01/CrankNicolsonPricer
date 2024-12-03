@@ -51,12 +51,12 @@ int main() {
             std::cout << "Crank Nicolson price:" << std::endl;
             std::cout << eur.getPrice() << std::endl;
 
-            std::cout << "B-S price:" << std::endl;
-            std::cout << m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma()) << std::endl;
+            
+            m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
 
             eur.calculateDelta();
 
-            std::cout << "Delta: " << eur.getDelta() << std::endl;
+            std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
 
         }
 

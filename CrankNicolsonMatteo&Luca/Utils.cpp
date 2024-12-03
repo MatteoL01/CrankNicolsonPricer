@@ -10,10 +10,12 @@ namespace m2 {
         double d2 = d1 - sigma * std::sqrt(T);
 
         if (isCall) {
+            std::cout << "B-S price: " << S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2) << std::endl;
             std::cout << "Delta: " << normalCDF(d1) << std::endl;
             return S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2);
         }
         else {
+            std::cout << "B-S price: " << K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1) << std::endl;
             std::cout << "Delta: " << normalCDF(d1) - 1 << std::endl;
             return K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1);
         }

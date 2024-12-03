@@ -23,6 +23,8 @@ namespace m2
 
 		// store the values of the Greeks
 		std::vector<double> delta_;
+		std::vector<double> gamma_;
+		std::vector<double> theta_;
 	public:
 		American(Option & opt);
 		
@@ -30,6 +32,8 @@ namespace m2
 		void pricePut();
 
 		void calculateDelta();
+		void calculateGamma();
+		void calculateTheta();
 
 		Matrix get_val() const { return values_; }
 
@@ -40,6 +44,10 @@ namespace m2
 		// greeks
 		std::vector<double> getDeltaGraph() const { return delta_; }
 		double getDelta() const { return delta_[S0_ / ds_]; }
+		std::vector<double> getGammaGraph() const { return gamma_; }
+		double getGamma() const { return gamma_[S0_ / ds_]; }
+		std::vector<double> getThetaGraph() const { return theta_; }
+		double getTheta() const { return theta_[S0_ / ds_]; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;
@@ -61,6 +69,8 @@ namespace m2
 
 		// store the values of the Greeks
 		std::vector<double> delta_;
+		std::vector<double> gamma_;
+		std::vector<double> theta_;
 	public:
 		European(Option& opt);
 
@@ -68,6 +78,8 @@ namespace m2
 		void pricePut();
 
 		void calculateDelta();
+		void calculateGamma();
+		void calculateTheta();
 
 		Matrix get_val() const {return values_; }
 
@@ -78,6 +90,10 @@ namespace m2
 		// greeks
 		std::vector<double> getDeltaGraph() const { return delta_; }
 		double getDelta() const { return delta_[S0_ / ds_]; }
+		std::vector<double> getGammaGraph() const { return gamma_; }
+		double getGamma() const { return gamma_[S0_ / ds_]; }
+		std::vector<double> getThetaGraph() const { return theta_; }
+		double getTheta() const { return theta_[S0_ / ds_]; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;

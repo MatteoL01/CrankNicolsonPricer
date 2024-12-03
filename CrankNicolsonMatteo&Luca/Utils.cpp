@@ -5,22 +5,35 @@ namespace m2 {
         return 0.5 * erfc(-x * M_SQRT1_2);
     }
 
+    double normalPDF(double d) {
+        return std::exp(-0.5 * d * d) * M_SQRT1_2 / std::sqrt(M_PI);
+    }
+
+
     double blackScholesPrice(bool isCall, double S, double K, double T, double r, double sigma) {
         double d1 = (std::log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * std::sqrt(T));
         double d2 = d1 - sigma * std::sqrt(T);
 
+        double delta = normalCDF(d1); // For call
+        double gamma = normalPDF(d1) / (S * sigma * std::sqrt(T));
+        double theta;
+
         if (isCall) {
+            theta = -(S * normalPDF(d1) * sigma / (2 * std::sqrt(T))) - r * K * std::exp(-r * T) * normalCDF(d2);
             std::cout << "B-S price: " << S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2) << std::endl;
-            std::cout << "Delta: " << normalCDF(d1) << std::endl;
+            std::cout << "Delta: " << delta << std::endl;
+            std::cout << "Gamma: " << gamma << std::endl;
+            std::cout << "Theta: " << theta << std::endl;
             return S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2);
         }
         else {
+            theta = -(S * normalPDF(d1) * sigma / (2 * std::sqrt(T))) + r * K * std::exp(-r * T) * normalCDF(-d2);
             std::cout << "B-S price: " << K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1) << std::endl;
-            std::cout << "Delta: " << normalCDF(d1) - 1 << std::endl;
+            std::cout << "Delta: " << delta - 1 << std::endl;
+            std::cout << "Gamma: " << gamma << std::endl;
+            std::cout << "Theta: " << theta << std::endl;
             return K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1);
         }
-
-        
     }
 
     float max(float a, float b) {
@@ -57,7 +70,7 @@ namespace m2 {
         return lhs;
     }
 
-    void crout(Matrix& T2, std::vector<double>& W, std::vector<double>& V, int M) {
+    void crout(const Matrix& T2, const std::vector<double>& W, std::vector<double>& V, int M) {
         M = M - 1; // we want dimension M - 1
 
         Matrix L(M, M), U(M, M);
@@ -130,6 +143,50 @@ namespace m2 {
             throw std::runtime_error("Total weight is zero, invalid time intervals");
 
         return totalRate / totalWeight;
+    }
+
+    void writeOutputTxt(double price, double delta, double gamma, const std::vector<double>& T0prices, const std::vector<double>& T0deltas)
+    {
+        const std::string filePath = "output_data.txt"; // Create a file to write results
+
+        std::ofstream out(filePath);
+        if (!out.is_open()) {
+            throw std::runtime_error("Could not create or open file: " + filePath);
+        }
+
+        try 
+        {
+            // Write price and greeks
+            out << price << std::endl;
+            out << delta << std::endl;
+            out << gamma << std::endl;
+
+            // Write prices for graph of option price
+            for (const auto val : T0prices)
+            {
+                out << val << " ";
+            }
+
+            out << std::endl;
+
+            // Write deltas for graph of delta at varying prices
+            for (const auto val : T0deltas)
+            {
+                out << val << " ";
+            }
+
+            out << std::endl;
+
+
+        }
+
+        catch (const std::exception& e)
+        {
+            out.close();
+            throw;
+        }
+
+        out.close();
     }
 
 }

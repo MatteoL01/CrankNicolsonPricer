@@ -13,17 +13,10 @@ namespace m2
 	{
 	private:
 		Matrix values_;
-		/*
-		bool call_; // true for call, 0 for put
-		double T_;           // Maturity date
-		double K_;           // Strike price
-		unsigned int N_; // Discretization in time
-		unsigned int M_; // Discretization in spot
-		double S0_;         // Initial price of the underlying
-		double sigma_;       // Volatility
-		std::vector<std::pair<double, double>> rates_;  // Interest rate as (time, rate)
-		*/
-
+		double dt_;
+		double ds_;
+		double Smax_;
+		
 		// store the values of the prices
 		double price_; // final price of American Option
 		std::vector<double> T0prices_; // price of Option at time T0 varying S
@@ -54,7 +47,10 @@ namespace m2
 	{
 	private:
 		Matrix values_;
-		
+		double dt_;
+		double ds_;
+		double Smax_;
+
 		// store the values of the prices
 		double price_; // final price of European Option
 		std::vector<double> T0prices_; // price of Option at time T0 varying S

@@ -22,7 +22,7 @@ namespace m2
 		std::vector<double> T0prices_; // price of Option at time T0 varying S
 
 		// store the values of the Greeks
-		Matrix delta_;
+		std::vector<double> delta_;
 	public:
 		American(Option & opt);
 		
@@ -36,6 +36,10 @@ namespace m2
 		double getPrice() const { return price_;}
 
 		std::vector<double> getT0prices() const { return T0prices_; }
+
+		// greeks
+		std::vector<double> getDeltaGraph() const { return delta_; }
+		double getDelta() const { return delta_[S0_ / ds_]; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;
@@ -56,7 +60,7 @@ namespace m2
 		std::vector<double> T0prices_; // price of Option at time T0 varying S
 
 		// store the values of the Greeks
-		Matrix delta_;
+		std::vector<double> delta_;
 	public:
 		European(Option& opt);
 
@@ -70,6 +74,10 @@ namespace m2
 		double getPrice() const { return price_; }
 
 		std::vector<double> getT0prices() const { return T0prices_; }
+
+		// greeks
+		std::vector<double> getDeltaGraph() const { return delta_; }
+		double getDelta() const { return delta_[S0_ / ds_]; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;

@@ -2,7 +2,7 @@
 
 namespace m2
 {   
-    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0)
+    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0), delta_(M_, 0.0)
     {   
         dt_ = T_ / N_;
         opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
@@ -10,11 +10,10 @@ namespace m2
 
         // initialize the matrix of price and greeks
         values_ = Matrix(N_ + 1, M_ + 1);
-        delta_ = Matrix(N_ + 1, M_ + 1);
 
     }
 
-    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0)
+    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(0.0), delta_(M_, 0.0)
     {
         dt_ = T_ / N_;
         opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
@@ -22,7 +21,6 @@ namespace m2
 
         // initialize the matrix of price and greeks
         values_ = Matrix(N_ + 1, M_ + 1);
-        delta_ = Matrix(N_ + 1, M_ + 1);
 
     }
 
@@ -381,12 +379,17 @@ namespace m2
 
     void European::calculateDelta()
     {
-        for (unsigned int i = 1; i < N_+1; i++)
+        for (unsigned int i = 0; i < M_; i++)
         {
-            for (unsigned int j = 0; j < M_; j++)
-            {
-                delta_(i, j) = (values_(i - 1, j) - values_(i, j));
-            }
+            delta_[i] = (values_(N_, i + 1) - values_(N_, i)) / ds_;
+        }
+    }
+
+    void American::calculateDelta()
+    {
+        for (unsigned int i = 0; i < M_; i++)
+        {
+            delta_[i] = (values_(N_, i + 1) - values_(N_, i)) / ds_;
         }
     }
 

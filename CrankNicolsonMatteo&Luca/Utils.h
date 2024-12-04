@@ -44,7 +44,7 @@ namespace m2 {
 	double computeAverageRate(const std::vector<std::pair<double, double>>& rates, double T);
 
 	// Write the results of the calculations in a txt file 
-	void writeOutputTxt(double price, double delta, double gamma, const std::vector<double>& T0prices, const std::vector<double>& T0deltas);
+	void writeOutputTxt(double price, double delta, double gamma, double theta, double vega, double rho, const std::vector<double>& T0prices, const std::vector<double>& T0deltas, const std::vector<double>& boundaries);
 }
 
 #endif // !UTILS_H

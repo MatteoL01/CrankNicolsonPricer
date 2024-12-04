@@ -2,10 +2,10 @@
 
 namespace m2
 {
-    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0)
+    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(M_, 0.0)
     {
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
+        opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price and greeks
@@ -13,7 +13,7 @@ namespace m2
 
     }
 
-    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0)
+    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(M_, 0.0)
     {
         dt_ = T_ / N_;
         opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
@@ -97,6 +97,17 @@ namespace m2
 
 
             crout(T2, W, V, M_);
+
+            // Calculate exercise boundary
+            double bound = 0.0;  // Default if no early exercise
+            for (unsigned int i = 0; i < M_ - 1; i++) {
+                double intrinsic_value = max(K_ - ds_ * (i + 1), 0.0);
+                if (V[i] == intrinsic_value) {
+                    bound = ds_ * (i + 1);  // Stock price where early exercise occurs
+                    break;  // Only need the first occurrence
+                }
+            }
+            boundary_[N_ - n] = bound;
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
@@ -185,17 +196,28 @@ namespace m2
 
             crout(T2, W, V, M_);
 
+            // Calculate exercise boundary
+            double bound = 0.0;  // Default if no early exercise
+            for (unsigned int i = 0; i < M_ - 1; i++) {
+                double intrinsic_value = max( ds_ * (i + 1) - K_, 0.0);
+                if (V[i] == intrinsic_value) {
+                    bound = ds_ * (i + 1);  // Stock price where early exercise occurs
+                    break;  // Only need the first occurrence
+                }
+            }
+            boundary_[N_ - n] = bound;
+
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // american call payoff 
-                //if (fabs(V[i]) < 1e-4) V[i] = 0.0;
+                if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i + 1) = V[i];
             }
 
         }
 
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos+1);
+        price_ = values_(N_, pos);
 
         T0prices_ = V;
     }
@@ -374,6 +396,8 @@ namespace m2
         //printMatrix();
 
         T0prices_ = V;
+
+        
     }
 
     void European::calculateDelta()
@@ -422,6 +446,69 @@ namespace m2
         {
             theta_[i] = (values_(N_ -1, i) - values_(N_, i)) / dt_;
         }
+    }
+
+    void American::calculateVega()
+    {
+        optionPrice_ = price_;
+        double epsilon = 0.001;
+
+        sigma_ += epsilon;
+
+        if (call_) { priceCall(); }
+        else { pricePut(); }
+
+        vega_ = (values_(N_, S0_ / ds_) - optionPrice_)/epsilon;
+
+        sigma_ -= epsilon;
+    }
+
+    void European::calculateVega()
+    {
+        optionPrice_ = price_;
+        double epsilon = 0.001;
+
+        sigma_ += epsilon;
+        
+        if (call_) { priceCall(); }
+        else { pricePut(); }
+
+        vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+
+        sigma_ -= epsilon;
+    }
+
+    void European::calculateRho()
+    {
+        
+        double epsilon = 0.001;
+
+        for (size_t i = 0; i < rates_.size() - 1; i++)
+        {
+            rates_[i].second += epsilon;
+        }
+
+        if (call_) { priceCall(); }
+        else { pricePut(); }
+
+        //std::cout << "Price: " << values_(N_, S0_ / ds_) - optionPrice_ << std::endl;
+
+        rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+    }
+
+    void American::calculateRho()
+    {
+        double epsilon = 0.001;
+
+        for (size_t i = 0; i < rates_.size() - 1; i++)
+        {
+            rates_[i].second += epsilon;
+        }
+
+        if (call_) { priceCall(); }
+        else { pricePut(); }
+
+        rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
     }
 
 }

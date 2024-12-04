@@ -22,7 +22,16 @@ int main() {
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
             
             eur.calculateDelta();
+            eur.calculateGamma();
+            eur.calculateTheta();
+            eur.calculateVega();
+            eur.calculateRho();
             std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
+            std::cout << "Gamma Crank Nicolson: " << eur.getGamma() << std::endl;
+            std::cout << "Theta Crank Nicolson: " << eur.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << eur.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << eur.getRho() << std::endl;
+
             std::cout << "----------------------------------------------------------------" << std::endl;
         }
 
@@ -41,7 +50,16 @@ int main() {
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
            
             eur.calculateDelta();
+            eur.calculateGamma();
+            eur.calculateTheta();
+            eur.calculateVega();
+            eur.calculateRho();
             std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
+            std::cout << "Gamma Crank Nicolson: " << eur.getGamma() << std::endl;
+            std::cout << "Theta Crank Nicolson: " << eur.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << eur.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << eur.getRho() << std::endl;
+
             std::cout << "----------------------------------------------------------------" << std::endl;
         }
 
@@ -60,7 +78,16 @@ int main() {
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
         
             ame.calculateDelta();
+            ame.calculateGamma();
+            ame.calculateTheta();
+            ame.calculateVega();
+            ame.calculateRho();
             std::cout << "Delta Crank Nicolson: " << ame.getDelta() << std::endl;
+            std::cout << "Gamma Crank Nicolson: " << ame.getGamma() << std::endl;
+            std::cout << "Theta Crank Nicolson: " << ame.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << ame.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << ame.getRho() << std::endl;
+
             std::cout << "----------------------------------------------------------------" << std::endl;
         }
 
@@ -79,7 +106,16 @@ int main() {
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
             
             ame.calculateDelta();
+            ame.calculateGamma();
+            ame.calculateTheta();
+            ame.calculateVega();
+            ame.calculateRho();
             std::cout << "Delta Crank Nicolson: " << ame.getDelta() << std::endl;
+            std::cout << "Gamma Crank Nicolson: " << ame.getGamma() << std::endl;
+            std::cout << "Theta Crank Nicolson: " << ame.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << ame.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << ame.getRho() << std::endl;
+
             std::cout << "----------------------------------------------------------------" << std::endl;
         }
     }

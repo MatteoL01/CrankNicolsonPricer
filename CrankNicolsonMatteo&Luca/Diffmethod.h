@@ -20,11 +20,17 @@ namespace m2
 		// store the values of the prices
 		double price_; // final price of American Option
 		std::vector<double> T0prices_; // price of Option at time T0 varying S
+		double optionPrice_;
 
 		// store the values of the Greeks
 		std::vector<double> delta_;
 		std::vector<double> gamma_;
 		std::vector<double> theta_;
+		double vega_;
+		double rho_;
+
+		// Store the values of Boundary conditions
+		std::vector<double> boundary_;
 	public:
 		American(Option & opt);
 		
@@ -34,6 +40,8 @@ namespace m2
 		void calculateDelta();
 		void calculateGamma();
 		void calculateTheta();
+		void calculateVega();
+		void calculateRho();
 
 		Matrix get_val() const { return values_; }
 
@@ -48,6 +56,11 @@ namespace m2
 		double getGamma() const { return gamma_[S0_ / ds_]; }
 		std::vector<double> getThetaGraph() const { return theta_; }
 		double getTheta() const { return theta_[S0_ / ds_]; }
+		double getVega() const { return vega_; }
+		double getRho() const { return rho_; }
+
+		// Boundaries
+		std::vector<double> getBound() const { return boundary_; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;
@@ -66,11 +79,17 @@ namespace m2
 		// store the values of the prices
 		double price_; // final price of European Option
 		std::vector<double> T0prices_; // price of Option at time T0 varying S
+		double optionPrice_;
 
 		// store the values of the Greeks
 		std::vector<double> delta_;
 		std::vector<double> gamma_;
 		std::vector<double> theta_;
+		double vega_;
+		double rho_;
+
+		// Store the values of Boundary conditions
+		std::vector<double> boundary_;
 	public:
 		European(Option& opt);
 
@@ -80,6 +99,8 @@ namespace m2
 		void calculateDelta();
 		void calculateGamma();
 		void calculateTheta();
+		void calculateVega();
+		void calculateRho();
 
 		Matrix get_val() const {return values_; }
 
@@ -94,6 +115,11 @@ namespace m2
 		double getGamma() const { return gamma_[S0_ / ds_]; }
 		std::vector<double> getThetaGraph() const { return theta_; }
 		double getTheta() const { return theta_[S0_ / ds_]; }
+		double getVega() const { return vega_; }
+		double getRho() const { return rho_; }
+		
+		// Boundaries
+		std::vector<double> getBound() const { return boundary_; }
 
 		void printMatrix() const {
 			std::cout << "Matrix Values: \n" << values_ << std::endl;

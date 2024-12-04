@@ -17,21 +17,29 @@ namespace m2 {
         double delta = normalCDF(d1); // For call
         double gamma = normalPDF(d1) / (S * sigma * std::sqrt(T));
         double theta;
+        double vega = S * normalPDF(d1) * std::sqrt(T);
+        double rho;
 
         if (isCall) {
             theta = -(S * normalPDF(d1) * sigma / (2 * std::sqrt(T))) - r * K * std::exp(-r * T) * normalCDF(d2);
+            rho = K * T * std::exp(-r * T) * normalCDF(d2);
             std::cout << "B-S price: " << S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2) << std::endl;
             std::cout << "Delta: " << delta << std::endl;
             std::cout << "Gamma: " << gamma << std::endl;
             std::cout << "Theta: " << theta << std::endl;
+            std::cout << "Vega: " << vega << std::endl;
+            std::cout << "Rho: " << rho << std::endl;
             return S * normalCDF(d1) - K * std::exp(-r * T) * normalCDF(d2);
         }
         else {
             theta = -(S * normalPDF(d1) * sigma / (2 * std::sqrt(T))) + r * K * std::exp(-r * T) * normalCDF(-d2);
+            rho = -K * T * std::exp(-r * T) * normalCDF(-d2);
             std::cout << "B-S price: " << K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1) << std::endl;
             std::cout << "Delta: " << delta - 1 << std::endl;
             std::cout << "Gamma: " << gamma << std::endl;
             std::cout << "Theta: " << theta << std::endl;
+            std::cout << "Vega: " << vega << std::endl;
+            std::cout << "Rho: " << rho << std::endl;
             return K * std::exp(-r * T) * normalCDF(-d2) - S * normalCDF(-d1);
         }
     }
@@ -145,7 +153,7 @@ namespace m2 {
         return totalRate / totalWeight;
     }
 
-    void writeOutputTxt(double price, double delta, double gamma, const std::vector<double>& T0prices, const std::vector<double>& T0deltas)
+    void writeOutputTxt(double price, double delta, double gamma, double theta, double vega, double rho, const std::vector<double>& T0prices, const std::vector<double>& T0deltas, const std::vector<double>& boundaries)
     {
         const std::string filePath = "output_data.txt"; // Create a file to write results
 
@@ -160,6 +168,9 @@ namespace m2 {
             out << price << std::endl;
             out << delta << std::endl;
             out << gamma << std::endl;
+            out << theta << std::endl;
+            out << vega << std::endl;
+            out << rho << std::endl;
 
             // Write prices for graph of option price
             for (const auto val : T0prices)
@@ -171,6 +182,14 @@ namespace m2 {
 
             // Write deltas for graph of delta at varying prices
             for (const auto val : T0deltas)
+            {
+                out << val << " ";
+            }
+
+            out << std::endl;
+
+            // Write deltas for graph of delta at varying prices
+            for (const auto val : boundaries)
             {
                 out << val << " ";
             }

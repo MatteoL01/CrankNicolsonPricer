@@ -34,12 +34,16 @@ int main() {
             ame.calculateDelta();
             ame.calculateGamma();
             ame.calculateTheta();
+            ame.calculateVega();
+            ame.calculateRho();
 
             std::cout << "Delta Crank Nicolson: " << ame.getDelta() << std::endl;
             std::cout << "Gamma Crank Nicolson: " << ame.getGamma() << std::endl;
-            std::cout << "Gamma Crank Nicolson: " << ame.getTheta() << std::endl;
+            std::cout << "Theta Crank Nicolson: " << ame.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << ame.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << ame.getRho() << std::endl;
 
-            m2::writeOutputTxt(ame.getPrice(), ame.getDelta(), ame.getGamma(), ame.getT0prices(), ame.getDeltaGraph());
+            m2::writeOutputTxt(ame.getPrice(), ame.getDelta(), ame.getGamma(), ame.getTheta(), ame.getVega(), ame.getRho(), ame.getT0prices(), ame.getDeltaGraph(),ame.getBound());
         }
 
         else
@@ -62,12 +66,16 @@ int main() {
             eur.calculateDelta();
             eur.calculateGamma();
             eur.calculateTheta();
+            eur.calculateVega();
+            eur.calculateRho();
 
             std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
             std::cout << "Gamma Crank Nicolson: " << eur.getGamma() << std::endl;
             std::cout << "Theta Crank Nicolson: " << eur.getTheta() << std::endl;
+            std::cout << "Vega Crank Nicolson: " << eur.getVega() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << eur.getRho() << std::endl;
 
-            m2::writeOutputTxt(eur.getPrice(), eur.getDelta(), eur.getGamma(), eur.getT0prices(), eur.getDeltaGraph());
+            m2::writeOutputTxt(eur.getPrice(), eur.getDelta(), eur.getGamma(), eur.getTheta(), eur.getVega(), eur.getRho(), eur.getT0prices(), eur.getDeltaGraph(), eur.getBound());
 
         }
 

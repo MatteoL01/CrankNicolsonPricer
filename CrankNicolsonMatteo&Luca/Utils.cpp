@@ -153,59 +153,63 @@ namespace m2 {
         return totalRate / totalWeight;
     }
 
-    void writeOutputTxt(double price, double delta, double gamma, double theta, double vega, double rho, const std::vector<double>& T0prices, const std::vector<double>& T0deltas, const std::vector<double>& boundaries)
-    {
-        const std::string filePath = "output_data.txt"; // Create a file to write results
+#include <fstream>
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <iostream>
 
+    void writeToFile(const std::string& filePath, const std::vector<double>& data) {
         std::ofstream out(filePath);
         if (!out.is_open()) {
             throw std::runtime_error("Could not create or open file: " + filePath);
         }
-
-        try 
-        {
-            // Write price and greeks
-            out << price << std::endl;
-            out << delta << std::endl;
-            out << gamma << std::endl;
-            out << theta << std::endl;
-            out << vega << std::endl;
-            out << rho << std::endl;
-
-            // Write prices for graph of option price
-            for (const auto val : T0prices)
-            {
+        try {
+            for (const auto& val : data) {
                 out << val << " ";
             }
-
             out << std::endl;
-
-            // Write deltas for graph of delta at varying prices
-            for (const auto val : T0deltas)
-            {
-                out << val << " ";
-            }
-
-            out << std::endl;
-
-            // Write deltas for graph of delta at varying prices
-            for (const auto val : boundaries)
-            {
-                out << val << " ";
-            }
-
-            out << std::endl;
-
-
         }
-
-        catch (const std::exception& e)
-        {
+        catch (const std::exception& e) {
             out.close();
             throw;
         }
-
         out.close();
     }
+
+    void writeOutputTxt(
+         double price, double delta, double gamma, double theta, double vega, double rho, const std::vector<double>& T0prices, const std::vector<double>& T0deltas, const std::vector<double>& boundaries)
+    {
+        // File paths
+        const std::string pricePath = "price_data.txt";
+        const std::string graphPath = "price_graph.txt";
+        const std::string deltaPath = "delta_graph.txt";
+        const std::string boundaryPath = "boundary_graph.txt";
+
+        // Write price and greeks
+        std::ofstream out(pricePath);
+        if (!out.is_open()) {
+            throw std::runtime_error("Could not create or open file: " + pricePath);
+        }
+        try {
+            out << price << std::endl
+                << delta << std::endl
+                << gamma << std::endl
+                << theta << std::endl
+                << vega << std::endl
+                << rho << std::endl;
+        }
+        catch (const std::exception& e) {
+            out.close();
+            throw; // Rethrow any exception
+        }
+        out.close();
+
+        // Write additional data to files
+        writeToFile(graphPath, T0prices);
+        writeToFile(deltaPath, T0deltas);
+        writeToFile(boundaryPath, boundaries);
+    }
+
 
 }

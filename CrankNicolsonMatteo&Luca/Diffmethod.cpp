@@ -2,7 +2,7 @@
 
 namespace m2
 {
-    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(M_, 0.0)
+    American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
         opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
@@ -13,7 +13,7 @@ namespace m2
 
     }
 
-    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(M_, 0.0)
+    European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
         opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
@@ -98,21 +98,16 @@ namespace m2
 
             crout(T2, W, V, M_);
 
-            // Calculate exercise boundary
-            double bound = 0.0;  // Default if no early exercise
-            for (unsigned int i = 0; i < M_ - 1; i++) {
-                double intrinsic_value = max(K_ - ds_ * (i + 1), 0.0);
-                if (V[i] == intrinsic_value) {
-                    bound = ds_ * (i + 1);  // Stock price where early exercise occurs
-                    break;  // Only need the first occurrence
-                }
-            }
-            boundary_[N_ - n] = bound;
-
+            bool found = false;
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
+                //if (!found && V[i] > K_ - ds_ * (i + 1))
+                //{
+                //    boundary_[N_ - n] = K_ - ds_ * (i + 1); // Set the boundary value
+                //    found = true; // Ensure the boundary is set only once
+                //}
                 V[i] = max(V[i], K_ - ds_ * (i + 1)); // american put payoff
-                values_(N_ - n + 1, i + 1) = V[i];
+                values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
 
         }
@@ -196,22 +191,17 @@ namespace m2
 
             crout(T2, W, V, M_);
 
-            // Calculate exercise boundary
-            double bound = 0.0;  // Default if no early exercise
-            for (unsigned int i = 0; i < M_ - 1; i++) {
-                double intrinsic_value = max( ds_ * (i + 1) - K_, 0.0);
-                if (V[i] == intrinsic_value) {
-                    bound = ds_ * (i + 1);  // Stock price where early exercise occurs
-                    break;  // Only need the first occurrence
-                }
-            }
-            boundary_[N_ - n] = bound;
-
+            bool found = false;
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
+                if (!found && V[i] > ds_ * (i + 1) - K_)
+                {
+                    boundary_[N_ - n] = ds_ * (i + 1) - K_; // Set the boundary value
+                    found = true; 
+                }
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // american call payoff 
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
-                values_(N_ - n + 1, i + 1) = V[i];
+                values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
 
         }
@@ -299,7 +289,7 @@ namespace m2
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 V[i] = max(V[i], 0); // European payoff (consider only positive values of V[i] as it can get negative due to approximations
-                values_(N_ - n + 1, i + 1) = V[i];
+                values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
 
         }

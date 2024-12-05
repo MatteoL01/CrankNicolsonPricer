@@ -83,11 +83,11 @@ namespace m2 {
 
         Matrix L(M, M), U(M, M);
 
-        std::vector<float> Z(M);
+        std::vector<double> Z(M);
 
         L(0, 0) = T2(0, 0);
         U(0, 1) = T2(0, 0) / L(0, 0);
-        for (unsigned int i = 1; i <= (M - 2); i++) {
+        for (unsigned int i = 1; i < (M - 1); i++) {
             L(i, i - 1) = T2(i, i - 1);
             L(i, i) = T2(i, i) - L(i, i - 1) * U(i - 1, i);
             U(i, i + 1) = T2(i, i + 1) / L(i, i);
@@ -99,7 +99,7 @@ namespace m2 {
         // solve the system
         // first solve Lz = b for z, where z = U V
         Z[0] = W[0];
-        for (unsigned int i = 1; i <= (M - 1); i++)
+        for (unsigned int i = 1; i < M; i++)
         {
             Z[i] = (W[i] - L(i, i - 1) * Z[i - 1]) / L(i, i);
         }
@@ -166,7 +166,7 @@ namespace m2 {
         }
         try {
             for (const auto& val : data) {
-                out << val << " ";
+                out << val << std::endl;
             }
             out << std::endl;
         }

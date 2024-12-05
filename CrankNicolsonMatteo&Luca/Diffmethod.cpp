@@ -5,7 +5,7 @@ namespace m2
     American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
+        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price and greeks
@@ -16,7 +16,7 @@ namespace m2
     European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 4 : Smax_ = K_ * 2;
+        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price and greeks
@@ -43,13 +43,6 @@ namespace m2
         // create vector of V and k (boundary times)
         std::vector<double> V(M_ - 1), k(M_ - 1);
 
-        // Fill k vector
-        k[0] = a[0] * Smax_;
-        for (unsigned int i = 1; i < (M_ - 1); i++)
-        {
-            k[i] = 0.0;
-        }
-
         // Add terminal values of V (at time N)
         for (unsigned int j = 0; j < (M_ - 1); j++)
         {
@@ -74,6 +67,13 @@ namespace m2
                 b[j] = (1 - 0.5 * pow(sigma_ * (j + 1), 2) * dt_);
                 c[j] = 0.25 * (j + 1) * dt_ * (pow(sigma_, 2) * (j + 1) + current_rate);
                 d[j] = (1 + (current_rate + 0.5 * pow(sigma_ * (j + 1), 2)) * dt_);
+            }
+
+            // Fill k vector
+            k[0] = a[0] * Smax_;
+            for (unsigned int i = 1; i < (M_ - 1); i++)
+            {
+                k[i] = 0.0;
             }
 
             for (unsigned int i = 0; i < (M_ - 1); i++)
@@ -127,7 +127,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = 0; // when S = 0 the values is equal to 0
-            values_(i, M_) = Smax_ - K_; // when S = Smax the value is equal to S - K
+            values_(i, M_) = Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to S - K
         }
 
 
@@ -136,13 +136,6 @@ namespace m2
 
         // create vector of V and k (boundary times)
         std::vector<double> V(M_ - 1), k(M_ - 1);
-
-        // Fill k vector
-        for (unsigned int i = 0; i < (M_ - 2); i++)
-        {
-            k[i] = 0.0;
-        }
-        k[M_ - 2] = c[M_ - 2] * Smax_;
 
         // Add terminal values of V (at time N)
         for (unsigned int j = 0; j < (M_ - 1); j++)
@@ -169,6 +162,13 @@ namespace m2
                 d[j] = (1 + (current_rate + 0.5 * pow(sigma_ * (j + 1), 2)) * dt_);
             }
 
+            // Fill k vector
+            for (unsigned int i = 0; i < (M_ - 2); i++)
+            {
+                k[i] = 0.0;
+            }
+            k[M_ - 2] = c[M_ - 2] * Smax_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
+
             for (unsigned int i = 0; i < (M_ - 1); i++)
             {
                 T1(i, i) = b[i];
@@ -194,11 +194,11 @@ namespace m2
             bool found = false;
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
-                if (!found && V[i] > ds_ * (i + 1) - K_)
-                {
-                    boundary_[N_ - n] = ds_ * (i + 1) - K_; // Set the boundary value
-                    found = true; 
-                }
+                //if (!found && V[i] > ds_ * (i + 1) - K_)
+                //{
+                //    boundary_[N_ - n] = ds_ * (i + 1) - K_; // Set the boundary value
+                //    found = true;
+                //}
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // american call payoff 
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i + 1) = max(V[i], 0);
@@ -210,6 +210,7 @@ namespace m2
         price_ = values_(N_, pos);
 
         T0prices_ = V;
+        //printMatrix();
     }
 
     void European::pricePut()
@@ -230,13 +231,6 @@ namespace m2
 
         // create vector of V and k (boundary times)
         std::vector<double> V(M_ - 1), k(M_ - 1);
-
-        // Fill k vector
-        k[0] = a[0] * Smax_; // check for this
-        for (unsigned int i = 1; i < (M_ - 1); i++)
-        {
-            k[i] = 0.0;
-        }
 
         // Add terminal values of V (at time N)
         for (unsigned int j = 0; j < (M_ - 1); j++)
@@ -264,6 +258,13 @@ namespace m2
                 d[j] = (1 + (current_rate + 0.5 * pow(sigma_ * (j + 1), 2)) * dt_);
             }
 
+            // Fill k vector
+            k[0] = a[0] * K_ * 2 * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
+            for (unsigned int i = 1; i < (M_ - 1); i++)
+            {
+                k[i] = 0.0;
+            }
+
             for (unsigned int i = 0; i < (M_ - 1); i++)
             {
                 T1(i, i) = b[i];
@@ -285,10 +286,11 @@ namespace m2
 
 
             crout(T2, W, V, M_);
+            V[0] = (values_(N_ - n, 0) + values_(N_ - n, 1) + values_(N_ - n, 2))/6 + (values_(N_ - n + 1, 0) + values_(N_ - n + 1, 2))/4;
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
-                V[i] = max(V[i], 0); // European payoff (consider only positive values of V[i] as it can get negative due to approximations
+                // European payoff
                 values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
 
@@ -303,7 +305,7 @@ namespace m2
 
     void European::priceCall()
     {
-        std::vector<double> a(M_), b(M_), c(M_), d(M_);
+        std::vector<double> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
 
         for (unsigned int i = 0; i < (N_ + 1); i++)
         {
@@ -314,36 +316,28 @@ namespace m2
 
 
         // create the two tridiagonal matrices
-        Matrix T1(M_, M_), T2(M_, M_);
+        Matrix T1(M_ - 1, M_ - 1), T2(M_ - 1, M_ - 1);
 
         // create vector of V and k (boundary times)
-        std::vector<double> V(M_, M_), k(M_, M_);
-
-        // Fill k vector
-        for (unsigned int i = 0; i < M_; i++)
-        {
-            k[i] = 0.0;
-        }
-        k[M_] = c[M_] * Smax_; // check for this
+        std::vector<double> V(M_ - 1), k(M_ - 1);
 
         // Add terminal values of V (at time N)
-        for (unsigned int j = 0; j < M_; j++)
+        for (unsigned int j = 0; j < M_ - 1; j++)
         {
             V[j] = max(ds_ * (j + 1) - K_, 0);
             values_(0, j + 1) = V[j];
         }
 
         // vector W = T1 * V + k
-        std::vector<double> W(M_);
+        std::vector<double> W(M_ - 1);
 
 
         for (int n = N_; n > 0; n--)
         {
-            k[M_] = c[M_] * (Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)))); // check for this
             // interpolate the interest rate
             double current_rate = interpolateRate(n * dt_, rates_);
 
-            for (unsigned int j = 0; j < M_; j++) {
+            for (unsigned int j = 0; j < M_ - 1; j++) {
 
                 a[j] = 0.25 * (j + 1) * dt_ * (pow(sigma_, 2) * (j + 1) - current_rate);
                 b[j] = (1 - 0.5 * pow(sigma_ * (j + 1), 2) * dt_);
@@ -351,13 +345,20 @@ namespace m2
                 d[j] = (1 + (current_rate + 0.5 * pow(sigma_ * (j + 1), 2)) * dt_);
             }
 
-            for (unsigned int i = 0; i < M_; i++)
+            // Fill k vector
+            for (unsigned int i = 0; i < (M_ - 2); i++)
+            {
+                k[i] = 0.0;
+            }
+            k[M_ - 2] = c[M_ - 2] * Smax_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
+
+            for (unsigned int i = 0; i < M_- 1; i++)
             {
                 T1(i, i) = b[i];
                 T2(i, i) = d[i];
             }
 
-            for (unsigned int i = 0; i < M_ - 1; i++)
+            for (unsigned int i = 0; i < M_ - 2; i++)
             {
                 T1(i, i + 1) = c[i];
                 T1(i + 1, i) = a[i + 1];
@@ -372,7 +373,7 @@ namespace m2
 
             crout(T2, W, V, M_);
 
-            for (unsigned int i = 0; i < M_; i++)
+            for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 //V[i] = max(V[i],0); // european call payoff
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
@@ -381,50 +382,54 @@ namespace m2
 
         }
 
+        //int pos = static_cast<int>(S0_ / ds_);
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos);
+        price_ = values_(N_, pos );
         //printMatrix();
 
         T0prices_ = V;
 
-        
+
     }
 
     void European::calculateDelta()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_ - 1; i++)
         {
-            delta_[i] = (values_(N_, i + 1) - values_(N_, i)) / ds_;
+            delta_[i] = (values_(N_, i + 1) - values_(N_, i - 1)) / (2 * ds_);
+            if (delta_[i] > 1.02 || delta_[i] < -1.02) delta_[i] = 0;
         }
+
     }
 
     void American::calculateDelta()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_ - 1; i++)
         {
-            delta_[i] = (values_(N_, i + 1) - values_(N_, i)) / ds_;
+            delta_[i] = (values_(N_, i + 1) - values_(N_, i - 1)) / (2 * ds_);
+            if (delta_[i] > 1.02 || delta_[i] < -1.02) delta_[i] = 0;
         }
     }
 
     void European::calculateGamma()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_ - 1; i++)
         {
-            gamma_[i] = (delta_[i + 1] - delta_[i]) / ds_;
+            gamma_[i] = (values_(N_, i + 1) - 2 * values_(N_, i) + values_(N_, i - 1)) / (ds_ * ds_);
         }
     }
 
     void American::calculateGamma()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_ - 1; i++)
         {
-            gamma_[i] = (delta_[i + 1] - delta_[i]) / ds_;
+            gamma_[i] = (values_(N_, i + 1) - 2 * values_(N_, i) + values_(N_, i - 1)) / (ds_ * ds_);
         }
     }
 
     void European::calculateTheta()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_; i++)
         {
             theta_[i] = (values_(N_ - 1, i) - values_(N_, i)) / dt_;
         }
@@ -432,9 +437,9 @@ namespace m2
 
     void American::calculateTheta()
     {
-        for (unsigned int i = 0; i < M_; i++)
+        for (unsigned int i = 1; i < M_; i++)
         {
-            theta_[i] = (values_(N_ -1, i) - values_(N_, i)) / dt_;
+            theta_[i] = (values_(N_ - 1, i) - values_(N_, i)) / dt_;
         }
     }
 
@@ -448,7 +453,7 @@ namespace m2
         if (call_) { priceCall(); }
         else { pricePut(); }
 
-        vega_ = (values_(N_, S0_ / ds_) - optionPrice_)/epsilon;
+        vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
 
         sigma_ -= epsilon;
     }
@@ -459,7 +464,7 @@ namespace m2
         double epsilon = 0.001;
 
         sigma_ += epsilon;
-        
+
         if (call_) { priceCall(); }
         else { pricePut(); }
 
@@ -470,7 +475,7 @@ namespace m2
 
     void European::calculateRho()
     {
-        
+
         double epsilon = 0.001;
 
         for (size_t i = 0; i < rates_.size() - 1; i++)

@@ -67,7 +67,7 @@ namespace m2 {
             throw std::invalid_argument("Matrix columns must match vector size.");
         }
 
-        std::vector<double> result(mat.get_nl(), 0.0f); // Initialize result vector with 0s
+        std::vector<double> result(mat.get_nl(), 0.0); // Initialize result vector with 0s
 
         for (int i = 0; i < mat.get_nl(); ++i) {
             for (int j = 0; j < mat.get_nc(); ++j) {

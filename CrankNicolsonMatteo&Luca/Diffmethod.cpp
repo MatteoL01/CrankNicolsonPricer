@@ -99,16 +99,16 @@ namespace m2
             crout(T2, W, V, M_);
 
             bool found = false;
-            for (unsigned int i = 0; i < M_ - 1; i++)
+            for (int i = M_ - 2; i >= 0; i--)
             {
-                //if (!found && V[i] > K_ - ds_ * (i + 1))
-                //{
-                //    boundary_[N_ - n] = K_ - ds_ * (i + 1); // Set the boundary value
-                //    found = true; // Ensure the boundary is set only once
-                //}
+                if (V[i] < K_ - ds_ * (i + 1) && !found) {
+                    boundary_[N_ - n] = V[i];
+                    found = true;
+                }
                 V[i] = max(V[i], K_ - ds_ * (i + 1)); // american put payoff
                 values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
+
 
         }
 
@@ -192,16 +192,14 @@ namespace m2
             crout(T2, W, V, M_);
 
             bool found = false;
-            for (unsigned int i = 0; i < M_ - 1; i++)
-            {
-                //if (!found && V[i] > ds_ * (i + 1) - K_)
-                //{
-                //    boundary_[N_ - n] = ds_ * (i + 1) - K_; // Set the boundary value
-                //    found = true;
-                //}
-                V[i] = max(V[i], ds_ * (i + 1) - K_); // american call payoff 
+            for (int i = M_ - 2; i >= 0; i--) {
+                if (V[i] > ds_ * (i + 1) - K_ && !found) {
+                    boundary_[N_ - n] = V[i];
+                    found = true;
+                }
+                V[i] = max(V[i], ds_ * (i + 1) - K_); // American call payoff
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
-                values_(N_ - n + 1, i + 1) = max(V[i], 0);
+                values_(N_ - n + 1, i + 1) = max(V[i], 0); // Store updated values
             }
 
         }
@@ -384,8 +382,8 @@ namespace m2
 
         //int pos = static_cast<int>(S0_ / ds_);
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos );
-        //printMatrix();
+        price_ = values_(N_, pos);
+        printMatrix();
 
         T0prices_ = V;
 

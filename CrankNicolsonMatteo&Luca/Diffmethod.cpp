@@ -8,8 +8,8 @@ namespace m2
         opt.getCallPut() ? Smax_ = S0_ * 2.5 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
-        // initialize the matrix of price and greeks
-        values_ = Matrix(N_ + 1, M_ + 1);
+        // initialize the matrix of price
+        values_ = Matrix(N_ + 1, M_);
 
     }
 
@@ -19,8 +19,8 @@ namespace m2
         opt.getCallPut() ? Smax_ = S0_ * 2.5 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
-        // initialize the matrix of price and greeks
-        values_ = Matrix(N_ + 1, M_ + 1);
+        // initialize the matrix of price
+        values_ = Matrix(N_ + 1, M_);
 
     }
 
@@ -33,7 +33,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = K_; // when S = 0 the values is equal to K
-            values_(i, M_) = 0; // when S = Smax the value is equal to zero
+            values_(i, M_ - 1) = 0; // when S = Smax the value is equal to zero
         }
 
 
@@ -127,7 +127,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = 0; // when S = 0 the values is equal to 0
-            values_(i, M_) = Smax_ - K_; // when S = Smax the value is equal to S - K
+            values_(i, M_ - 1) = Smax_ - K_; // when S = Smax the value is equal to S - K
         }
 
 
@@ -141,7 +141,7 @@ namespace m2
         for (unsigned int j = 0; j < (M_ - 1); j++)
         {
             V[j] = max(ds_ * (j + 1) - K_, 0);
-            values_(0, j + 1) = V[j];
+            values_(0, j) = V[j];
         }
 
         // vector W = T1 * V + k
@@ -199,13 +199,13 @@ namespace m2
                 }
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // American call payoff
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
-                values_(N_ - n + 1, i + 1) = max(V[i], 0); // Store updated values
+                values_(N_ - n + 1, i) = max(V[i], 0); // Store updated values
             }
 
         }
 
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos);
+        price_ = values_(N_, pos - 1);
 
         T0prices_ = V;
         //printMatrix();
@@ -284,14 +284,15 @@ namespace m2
 
 
             crout(T2, W, V, M_);
-            V[0] = (values_(N_ - n, 0) + values_(N_ - n, 1) + values_(N_ - n, 2))/6 + (values_(N_ - n + 1, 0) + values_(N_ - n + 1, 2))/4;
+            V[0] = K_ * 2 * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 // European payoff
-                values_(N_ - n + 1, i + 1) = max(V[i], 0);
+                values_(N_ - n + 1, i + 1) = max(V[i + 1], 0);
             }
 
+            
         }
 
         unsigned int pos = S0_ / ds_;
@@ -309,7 +310,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = 0; // when S = 0 the values is equal to K
-            values_(i, M_) = Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to [S - K * e^(-r(T-t))]
+            values_(i, M_) = (Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to [S - K * e^(-r(T-t))]
         }
 
 
@@ -348,7 +349,7 @@ namespace m2
             {
                 k[i] = 0.0;
             }
-            k[M_ - 2] = c[M_ - 2] * (Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n))));
+            k[M_ - 2] = c[M_ - 2] * ((Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n))));
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
@@ -370,6 +371,7 @@ namespace m2
             W += k;
 
             crout(T2, W, V, M_);
+            V[M_ - 2] = (Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
@@ -377,13 +379,13 @@ namespace m2
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
-            V[M_ - 2] = (Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n))));
+            
         }
 
         //int pos = static_cast<int>(S0_ / ds_);
         unsigned int pos = S0_ / ds_;
         price_ = values_(N_, pos);
-        //printMatrix();
+        printMatrix();
 
         T0prices_ = V;
 

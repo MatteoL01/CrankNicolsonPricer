@@ -31,7 +31,7 @@ int main() {
 
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
 
-            ame.calculateDelta();
+            /*ame.calculateDelta();
             ame.calculateGamma();
             ame.calculateTheta();
             ame.calculateVega();
@@ -41,7 +41,7 @@ int main() {
             std::cout << "Gamma Crank Nicolson: " << ame.getGamma() << std::endl;
             std::cout << "Theta Crank Nicolson: " << ame.getTheta() << std::endl;
             std::cout << "Vega Crank Nicolson: " << ame.getVega() << std::endl;
-            std::cout << "Rho Crank Nicolson: " << ame.getRho() << std::endl;
+            std::cout << "Rho Crank Nicolson: " << ame.getRho() << std::endl;*/
 
             m2::writeOutputTxt(ame.getPrice(), ame.getDelta(), ame.getGamma(), ame.getTheta(), ame.getVega(), ame.getRho(), ame.getT0prices(), ame.getDeltaGraph(),ame.getBound());
         }
@@ -63,17 +63,17 @@ int main() {
             
             m2::blackScholesPrice(opt.getCallPut(), opt.getS0(), opt.getK(), opt.getT(), m2::computeAverageRate(opt.getRates(), opt.getT()), opt.getSigma());
 
-            eur.calculateDelta();
-            eur.calculateGamma();
-            eur.calculateTheta();
+            //eur.calculateDelta();
+            //eur.calculateGamma();
+            //eur.calculateTheta();
             eur.calculateVega();
-            eur.calculateRho();
+            //eur.calculateRho();
 
-            std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
-            std::cout << "Gamma Crank Nicolson: " << eur.getGamma() << std::endl;
-            std::cout << "Theta Crank Nicolson: " << eur.getTheta() << std::endl;
-            std::cout << "Vega Crank Nicolson: " << eur.getVega() << std::endl;
-            std::cout << "Rho Crank Nicolson: " << eur.getRho() << std::endl;
+            //std::cout << "Delta Crank Nicolson: " << eur.getDelta() << std::endl;
+            //std::cout << "Gamma Crank Nicolson: " << eur.getGamma() << std::endl;
+            //std::cout << "Theta Crank Nicolson: " << eur.getTheta() << std::endl;
+            //std::cout << "Vega Crank Nicolson: " << eur.getVega() << std::endl;
+            //std::cout << "Rho Crank Nicolson: " << eur.getRho() << std::endl;
 
             m2::writeOutputTxt(eur.getPrice(), eur.getDelta(), eur.getGamma(), eur.getTheta(), eur.getVega(), eur.getRho(), eur.getT0prices(), eur.getDeltaGraph(), eur.getBound());
 

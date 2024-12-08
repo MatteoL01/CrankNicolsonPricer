@@ -153,12 +153,6 @@ namespace m2 {
         return totalRate / totalWeight;
     }
 
-#include <fstream>
-#include <vector>
-#include <string>
-#include <stdexcept>
-#include <iostream>
-
     void writeToFile(const std::string& filePath, const std::vector<double>& data) {
         std::ofstream out(filePath);
         if (!out.is_open()) {

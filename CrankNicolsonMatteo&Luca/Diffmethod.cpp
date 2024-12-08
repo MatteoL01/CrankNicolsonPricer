@@ -5,7 +5,7 @@ namespace m2
     American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
+        opt.getCallPut() ? Smax_ = S0_ * 2.5 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price and greeks
@@ -16,7 +16,7 @@ namespace m2
     European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ + 1, 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
+        opt.getCallPut() ? Smax_ = S0_ * 2.5 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price and greeks
@@ -127,7 +127,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = 0; // when S = 0 the values is equal to 0
-            values_(i, M_) = Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to S - K
+            values_(i, M_) = Smax_ - K_; // when S = Smax the value is equal to S - K
         }
 
 
@@ -167,7 +167,7 @@ namespace m2
             {
                 k[i] = 0.0;
             }
-            k[M_ - 2] = c[M_ - 2] * Smax_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
+            k[M_ - 2] = c[M_ - 2] * (Smax_ - K_);
 
             for (unsigned int i = 0; i < (M_ - 1); i++)
             {
@@ -348,9 +348,9 @@ namespace m2
             {
                 k[i] = 0.0;
             }
-            k[M_ - 2] = c[M_ - 2] * Smax_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n)));
+            k[M_ - 2] = c[M_ - 2] * (Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n))));
 
-            for (unsigned int i = 0; i < M_- 1; i++)
+            for (unsigned int i = 0; i < M_ - 1; i++)
             {
                 T1(i, i) = b[i];
                 T2(i, i) = d[i];
@@ -377,13 +377,13 @@ namespace m2
                 if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i + 1) = max(V[i], 0);
             }
-
+            V[M_ - 2] = (Smax_ - K_ * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - n))));
         }
 
         //int pos = static_cast<int>(S0_ / ds_);
         unsigned int pos = S0_ / ds_;
         price_ = values_(N_, pos);
-        printMatrix();
+        //printMatrix();
 
         T0prices_ = V;
 

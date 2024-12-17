@@ -86,7 +86,7 @@ namespace m2 {
         std::vector<double> Z(M);
 
         L(0, 0) = T2(0, 0);
-        U(0, 1) = T2(0, 0) / L(0, 0);
+        U(0, 1) = T2(0, 1) / L(0, 0);
         for (unsigned int i = 1; i < (M - 1); i++) {
             L(i, i - 1) = T2(i, i - 1);
             L(i, i) = T2(i, i) - L(i, i - 1) * U(i - 1, i);

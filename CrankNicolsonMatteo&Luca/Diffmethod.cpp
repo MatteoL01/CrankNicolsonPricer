@@ -4,8 +4,13 @@ namespace m2
 {
     American::American(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ , 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
+        // Time step size
         dt_ = T_ / N_;
-        opt.getCallPut() ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
+
+        // Maximum stock price, determined by whether it's a call or put option
+        call_ ? Smax_ = S0_ * 3 : Smax_ = K_ * 2;
+
+        // Stock price step size
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price
@@ -16,7 +21,7 @@ namespace m2
     European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ , 0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), optionPrice_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        call_ ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
+        call_ ? Smax_ = S0_ * 3 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price
@@ -26,31 +31,32 @@ namespace m2
 
 
     void American::pricePut() {
-
+        // Vectors to store coefficients for tridiagonal matrices
         std::vector<double> a(M_ - 1), b(M_ - 1), c(M_ - 1), d(M_ - 1);
 
+        // Initialize boundary conditions for the option value
         for (unsigned int i = 0; i < (N_ + 1); i++)
         {
-            // boundary condition asymptotic assumptions
+            // asymptotic assumptions
             values_(i, 0) = K_; // when S = 0 the values is equal to K
             values_(i, M_ - 1) = 0; // when S = Smax the value is equal to zero
         }
 
 
-        // create the two tridiagonal matrices
+        // Create the two tridiagonal matrices
         Matrix T1(M_ - 1, M_ - 1), T2(M_ - 1, M_ - 1);
 
         // create vector of V and k (boundary times)
         std::vector<double> V(M_ - 1), k(M_ - 1);
 
-        // Add terminal values of V (at time N)
+        // Set terminal condition (option value at maturity N)
         for (unsigned int j = 0; j < (M_ - 1); j++)
         {
             V[j] = max(K_ - ds_ * (j + 1), 0);
             values_(0, j + 1) = V[j];
         }
 
-
+        // Vector to store intermediate results
         // vector W = T1 * V + k
         std::vector<double> W(M_ - 1);
 
@@ -61,6 +67,7 @@ namespace m2
             // interpolate the interest rate
             double current_rate = interpolateRate(n * dt_, rates_);
 
+            // Compute coefficients for the tridiagonal matrices
             for (unsigned int j = 0; j < (M_ - 1); j++) {
 
                 a[j] = 0.25 * (j + 1) * dt_ * (pow(sigma_, 2) * (j + 1) - current_rate);
@@ -69,13 +76,14 @@ namespace m2
                 d[j] = (1 + (current_rate + 0.5 * pow(sigma_ * (j + 1), 2)) * dt_);
             }
 
-            // Fill k vector
+            // Fill k vector (boundary)
             k[0] = a[0] * Smax_;
             for (unsigned int i = 1; i < (M_ - 1); i++)
             {
                 k[i] = 0.0;
             }
 
+            // Fill the tridiagonal matrices
             for (unsigned int i = 0; i < (M_ - 1); i++)
             {
                 T1(i, i) = b[i];
@@ -92,12 +100,14 @@ namespace m2
 
             }
 
+            // Compute W 
             W = (T1 * V);
             W += k;
 
-
+            // Solve the tridiagonal system using Crout's method
             crout(T2, W, V, M_);
 
+            // Check for early exercise condition
             bool found = false;
             for (int i = M_ - 2; i >= 0; i--)
             {
@@ -112,6 +122,7 @@ namespace m2
 
         }
 
+        // Determine the option price based on the current stock price
         unsigned int pos = S0_ / ds_;
         price_ = values_(N_, pos);
         //printMatrix();
@@ -205,14 +216,13 @@ namespace m2
                     found = true;
                 }
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // American call payoff
-                if (fabs(V[i]) < 1e-4) V[i] = 0.0;
                 values_(N_ - n + 1, i) = max(V[i], 0); // Store updated values
             }
 
         }
 
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos);
+        price_ = values_(N_, pos );
 
         for (unsigned int i = 0; i < T0prices_.size(); i++)
         {
@@ -326,7 +336,7 @@ namespace m2
         {
             // boundary condition asymptotic assumptions
             values_(i, 0) = 0; // when S = 0 the values is equal to K
-            values_(i, M_ - 1) = (Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to [S - K * e^(-r(T-t))]
+            values_(i, M_ - 1) = (Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to [(S - K) * e^(-r(T-t))]
         }
 
 
@@ -369,7 +379,7 @@ namespace m2
             {
                 k[i] = 0.0;
             }
-            k[M_ - 2] = c[M_ - 2] * ((Smax_*4 - K_));
+            k[M_ - 2] = c[M_ - 2] * ((Smax_*2 - K_));
 
             for (unsigned int i = 0; i < M_ - 1; i++)
             {
@@ -391,10 +401,11 @@ namespace m2
             W += k;
 
             crout(T2, W, V, M_);
+            //V[M_] = (S0_ - K_) * exp(-computeAverageRate(rates_, T_) * (N_ - n));
 
             for (unsigned int i = 1; i < M_ - 1; i++)
             {
-                values_(N_ - n + 1, i) = max(V[i+1], 0);
+                values_(N_ - n + 1, i) = max(V[i], 0);
             }
 
         }

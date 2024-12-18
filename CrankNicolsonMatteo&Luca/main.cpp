@@ -11,7 +11,7 @@ int main() {
         m2::Option opt;
         opt.openInput("option_data.txt");
 
-        opt.printParameters();
+        //opt.printParameters();
 
         if (opt.getAmerican())
         {

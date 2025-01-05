@@ -55,7 +55,7 @@ Run the following code on the terminal:
     g++ -std=c++17 -o option_pricing main.cpp Matrix.cpp Diffmethod.cpp utils.cpp
 
 ## Project Structure
-option-pricing/
+'''option-pricing/
 │
 ├── include/
 │   ├── Option.h            # Header for the general option class

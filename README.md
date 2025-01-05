@@ -46,6 +46,6 @@ Clone the repository:
    cd option-pricing
 
 ### Usage
-
-g++ -std=c++17 -o option_pricing main.cpp Matrix.cpp Diffmethod.cpp utils.cpp
+Run the following code on the terminal:
+    g++ -std=c++17 -o option_pricing main.cpp Matrix.cpp Diffmethod.cpp utils.cpp
 

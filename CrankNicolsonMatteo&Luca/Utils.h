@@ -68,7 +68,7 @@ namespace m2 {
 	 * @param b The second number.
 	 * @return The larger of the two numbers.
 	 */
-	float max(float a, float b);
+	double max(double a, double b);
 
 	/**
 	 * @brief Linearly interpolates the interest rate at a given time.
@@ -76,7 +76,7 @@ namespace m2 {
 	 * @param rates A vector of (time, rate) pairs representing the piecewise interest rate structure.
 	 * @return The interpolated rate.
 	 */
-	float interpolateRate(double t, const std::vector<std::pair<double, double>>& rates);
+	double interpolateRate(double t, const std::vector<std::pair<double, double>>& rates);
 
 	/**
 	 * @brief Adds the elements of one vector to another (element-wise).
@@ -93,7 +93,7 @@ namespace m2 {
 	 * @param V The solution vector (updated in-place).
 	 * @param M The size of the system (number of equations).
 	 */
-	void crout(const Matrix& T2, const std::vector<double>& W, std::vector<double>& V, int M);
+	void crout(const Matrix& T2, const std::vector<double>& W, std::vector<double>& V, long int M);
 
 	/**
 	 * @brief Computes the average interest rate over a given time period using a piecewise rate structure.

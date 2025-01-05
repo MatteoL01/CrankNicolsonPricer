@@ -1,0 +1,242 @@
+\doxysection{Utils.\+h File Reference}
+\hypertarget{_utils_8h}{}\label{_utils_8h}\index{Utils.h@{Utils.h}}
+
+
+Utility functions and constants for financial option pricing and mathematical operations.  
+
+
+{\ttfamily \#include "{}Diffmethod.\+h"{}}\newline
+{\ttfamily \#include "{}Matrix.\+h"{}}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{_utils_8cpp_af54e3dac4fbda112db4eb2ca94dc066c}{m2\+::normal\+CDF}} (double x)
+\begin{DoxyCompactList}\small\item\em Computes the cumulative distribution function of the standard normal distribution. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{_utils_8cpp_ac72d4bd6b302aee8bf79d87f0b2247f9}{m2\+::normal\+PDF}} (double d)
+\begin{DoxyCompactList}\small\item\em Computes the probability density function of the standard normal distribution. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{_utils_8cpp_a47f992b089adc9a36f8760c8f53562c5}{m2\+::black\+Scholes\+Price}} (bool is\+Call, double S, double K, double T, double r, double sigma)
+\begin{DoxyCompactList}\small\item\em Computes the price of a \doxylink{classm2_1_1_european}{European} option using the Black-\/\+Scholes formula. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{_utils_8cpp_abd272e31696b3f13a09db7272606963b}{m2\+::max}} (float a, float b)
+\begin{DoxyCompactList}\small\item\em Computes the maximum of two floating-\/point numbers. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{_utils_8cpp_a5cd29e74b3ee8ec2d3ae810196d79d99}{m2\+::interpolate\+Rate}} (double t, const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \&rates)
+\begin{DoxyCompactList}\small\item\em Linearly interpolates the interest rate at a given time. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \& \mbox{\hyperlink{_utils_8cpp_a030c97ba3ff915b22c6dcc95dff1472f}{m2\+::operator+=}} (std\+::vector$<$ double $>$ \&lhs, const std\+::vector$<$ double $>$ \&rhs)
+\begin{DoxyCompactList}\small\item\em Adds the elements of one vector to another (element-\/wise). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_utils_8cpp_afc98ad24d0261a8e3eaa2531699f1caa}{m2\+::crout}} (const \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}} \&T2, const std\+::vector$<$ double $>$ \&W, std\+::vector$<$ double $>$ \&V, int M)
+\begin{DoxyCompactList}\small\item\em Solves a tridiagonal system of equations using the Crout decomposition. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{_utils_8cpp_ac15072324ac33611f4c796d8c8eb0fd8}{m2\+::compute\+Average\+Rate}} (const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \&rates, double T)
+\begin{DoxyCompactList}\small\item\em Computes the average interest rate over a given time period using a piecewise rate structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_utils_8cpp_a1a4a8e8a7706100f36c398bc6f345cf2}{m2\+::write\+Output\+Txt}} (double price, double delta, double gamma, double theta, double vega, double rho, const std\+::vector$<$ double $>$ \&T0prices, const std\+::vector$<$ double $>$ \&T0deltas, const std\+::vector$<$ double $>$ \&boundaries)
+\begin{DoxyCompactList}\small\item\em Writes the results of the option pricing calculations to a text file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility functions and constants for financial option pricing and mathematical operations. 
+
+This header provides various mathematical utilities, constants, and helper functions for implementing financial models and numerical methods. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_utils_8cpp_a47f992b089adc9a36f8760c8f53562c5}\index{Utils.h@{Utils.h}!blackScholesPrice@{blackScholesPrice}}
+\index{blackScholesPrice@{blackScholesPrice}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{blackScholesPrice()}{blackScholesPrice()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_a47f992b089adc9a36f8760c8f53562c5} 
+double m2\+::black\+Scholes\+Price (\begin{DoxyParamCaption}\item[{bool}]{is\+Call}{, }\item[{double}]{S}{, }\item[{double}]{K}{, }\item[{double}]{T}{, }\item[{double}]{r}{, }\item[{double}]{sigma}{}\end{DoxyParamCaption})}
+
+
+
+Computes the price of a European option using the Black-\/\+Scholes formula. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Call} & True for a call option, false for a put option. \\
+\hline
+{\em S} & The current price of the underlying asset. \\
+\hline
+{\em K} & The strike price of the option. \\
+\hline
+{\em T} & The time to maturity (in years). \\
+\hline
+{\em r} & The risk-\/free interest rate. \\
+\hline
+{\em sigma} & The volatility of the underlying asset. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The price of the option. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_ac15072324ac33611f4c796d8c8eb0fd8}\index{Utils.h@{Utils.h}!computeAverageRate@{computeAverageRate}}
+\index{computeAverageRate@{computeAverageRate}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{computeAverageRate()}{computeAverageRate()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_ac15072324ac33611f4c796d8c8eb0fd8} 
+double m2\+::compute\+Average\+Rate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \&}]{rates}{, }\item[{double}]{T}{}\end{DoxyParamCaption})}
+
+
+
+Computes the average interest rate over a given time period using a piecewise rate structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rates} & A vector of (time, rate) pairs representing the piecewise interest rate structure. \\
+\hline
+{\em T} & The time period over which to compute the average rate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The average rate. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_afc98ad24d0261a8e3eaa2531699f1caa}\index{Utils.h@{Utils.h}!crout@{crout}}
+\index{crout@{crout}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{crout()}{crout()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_afc98ad24d0261a8e3eaa2531699f1caa} 
+void m2\+::crout (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}} \&}]{T2}{, }\item[{const std\+::vector$<$ double $>$ \&}]{W}{, }\item[{std\+::vector$<$ double $>$ \&}]{V}{, }\item[{int}]{M}{}\end{DoxyParamCaption})}
+
+
+
+Solves a tridiagonal system of equations using the Crout decomposition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em T2} & The tridiagonal matrix representing the system. \\
+\hline
+{\em W} & The right-\/hand-\/side vector of the system. \\
+\hline
+{\em V} & The solution vector (updated in-\/place). \\
+\hline
+{\em M} & The size of the system (number of equations). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{_utils_8cpp_a5cd29e74b3ee8ec2d3ae810196d79d99}\index{Utils.h@{Utils.h}!interpolateRate@{interpolateRate}}
+\index{interpolateRate@{interpolateRate}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{interpolateRate()}{interpolateRate()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_a5cd29e74b3ee8ec2d3ae810196d79d99} 
+float m2\+::interpolate\+Rate (\begin{DoxyParamCaption}\item[{double}]{t}{, }\item[{const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \&}]{rates}{}\end{DoxyParamCaption})}
+
+
+
+Linearly interpolates the interest rate at a given time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The time for which to interpolate the rate. \\
+\hline
+{\em rates} & A vector of (time, rate) pairs representing the piecewise interest rate structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The interpolated rate. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_abd272e31696b3f13a09db7272606963b}\index{Utils.h@{Utils.h}!max@{max}}
+\index{max@{max}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{max()}{max()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_abd272e31696b3f13a09db7272606963b} 
+float m2\+::max (\begin{DoxyParamCaption}\item[{float}]{a}{, }\item[{float}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Computes the maximum of two floating-\/point numbers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The first number. \\
+\hline
+{\em b} & The second number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The larger of the two numbers. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_af54e3dac4fbda112db4eb2ca94dc066c}\index{Utils.h@{Utils.h}!normalCDF@{normalCDF}}
+\index{normalCDF@{normalCDF}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{normalCDF()}{normalCDF()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_af54e3dac4fbda112db4eb2ca94dc066c} 
+double m2\+::normal\+CDF (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})}
+
+
+
+Computes the cumulative distribution function of the standard normal distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The input value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The probability that a standard normal random variable is less than or equal to x. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_ac72d4bd6b302aee8bf79d87f0b2247f9}\index{Utils.h@{Utils.h}!normalPDF@{normalPDF}}
+\index{normalPDF@{normalPDF}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{normalPDF()}{normalPDF()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_ac72d4bd6b302aee8bf79d87f0b2247f9} 
+double m2\+::normal\+PDF (\begin{DoxyParamCaption}\item[{double}]{d}{}\end{DoxyParamCaption})}
+
+
+
+Computes the probability density function of the standard normal distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d} & The input value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the standard normal density function at d. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_a030c97ba3ff915b22c6dcc95dff1472f}\index{Utils.h@{Utils.h}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_a030c97ba3ff915b22c6dcc95dff1472f} 
+std\+::vector$<$ double $>$ \& m2\+::operator+= (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$ \&}]{lhs}{, }\item[{const std\+::vector$<$ double $>$ \&}]{rhs}{}\end{DoxyParamCaption})}
+
+
+
+Adds the elements of one vector to another (element-\/wise). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The left-\/hand-\/side vector to which elements are added. \\
+\hline
+{\em rhs} & The right-\/hand-\/side vector from which elements are added. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the updated lhs vector. 
+\end{DoxyReturn}
+\Hypertarget{_utils_8cpp_a1a4a8e8a7706100f36c398bc6f345cf2}\index{Utils.h@{Utils.h}!writeOutputTxt@{writeOutputTxt}}
+\index{writeOutputTxt@{writeOutputTxt}!Utils.h@{Utils.h}}
+\doxysubsubsection{\texorpdfstring{writeOutputTxt()}{writeOutputTxt()}}
+{\footnotesize\ttfamily \label{_utils_8cpp_a1a4a8e8a7706100f36c398bc6f345cf2} 
+void m2\+::write\+Output\+Txt (\begin{DoxyParamCaption}\item[{double}]{price}{, }\item[{double}]{delta}{, }\item[{double}]{gamma}{, }\item[{double}]{theta}{, }\item[{double}]{vega}{, }\item[{double}]{rho}{, }\item[{const std\+::vector$<$ double $>$ \&}]{T0prices}{, }\item[{const std\+::vector$<$ double $>$ \&}]{T0deltas}{, }\item[{const std\+::vector$<$ double $>$ \&}]{boundaries}{}\end{DoxyParamCaption})}
+
+
+
+Writes the results of the option pricing calculations to a text file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em price} & The calculated option price. \\
+\hline
+{\em delta} & The option delta. \\
+\hline
+{\em gamma} & The option gamma. \\
+\hline
+{\em theta} & The option theta. \\
+\hline
+{\em vega} & The option vega. \\
+\hline
+{\em rho} & The option rho. \\
+\hline
+{\em T0prices} & A vector of option prices at time 0. \\
+\hline
+{\em T0deltas} & A vector of option deltas at time 0. \\
+\hline
+{\em boundaries} & A vector of boundary conditions used in the calculations. \\
+\hline
+\end{DoxyParams}

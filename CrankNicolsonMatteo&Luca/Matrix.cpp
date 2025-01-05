@@ -5,7 +5,7 @@ namespace m2 {
     Matrix::Matrix(): nl_(1), nc_(1), data_(nl_* nc_, 0.0) {}
 
     // Constructor with dimensions, initializes with zero
-    Matrix::Matrix(unsigned int nl, unsigned int nc)
+    Matrix::Matrix(long int nl, long int nc)
         : nl_(nl), nc_(nc), data_(nl* nc, 0.0) {
     }
 
@@ -25,7 +25,7 @@ namespace m2 {
     int Matrix::get_nc() const { return nc_; }
 
     // Access operator (const version)
-    double Matrix::operator()(unsigned int i, unsigned int j) const {
+    double Matrix::operator()(long int i, long int j) const {
         if (i >= nl_ || j >= nc_ || i < 0 || j < 0) {
             throw std::out_of_range("Index out of bounds");
         }
@@ -33,7 +33,7 @@ namespace m2 {
     }
 
     // Access operator (non-const version)
-    double& Matrix::operator()(unsigned int i, unsigned int j) {
+    double& Matrix::operator()(long int i, long int j) {
         if (i >= nl_ || j >= nc_ || i < 0 || j < 0) {
             throw std::out_of_range("Index out of bounds");
         }

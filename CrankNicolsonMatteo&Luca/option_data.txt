@@ -1,5 +1,5 @@
 call
-american
+european
 0.495890
  100 
  300 

@@ -17,11 +17,11 @@ namespace m2 {
         bool american_; ///< True for an American option, false for a European option.
         double T_; ///< Maturity date of the option (in years).
         double K_; ///< Strike price of the option.
-        unsigned int N_; ///< Number of time discretization steps.
-        unsigned int M_; ///< Number of spot discretization steps.
+        long int N_; ///< Number of time discretization steps.
+        long int M_; ///< Number of spot discretization steps.
         double S0_; ///< Initial price of the underlying asset.
         double sigma_; ///< Volatility of the underlying asset.
-        unsigned int time_steps_; ///< Number of steps for interest rate discretization.
+        long int time_steps_; ///< Number of steps for interest rate discretization.
         std::vector<std::pair<double, double>> rates_; ///< Interest rates as pairs of (time, rate).
 
         /**
@@ -91,19 +91,19 @@ namespace m2 {
          * @brief Gets the number of time discretization steps.
          * @return Number of time steps.
          */
-        unsigned int getTimeDiscr() const { return N_; }
+        long int getTimeDiscr() const { return N_; }
 
         /**
          * @brief Gets the number of spot discretization steps.
          * @return Number of spot steps.
          */
-        unsigned int getSpotDiscr() const { return M_; }
+        long int getSpotDiscr() const { return M_; }
 
         /**
          * @brief Gets the number of time steps for interest rate discretization.
          * @return Number of interest rate steps.
          */
-        unsigned int getTimeSteps() const { return time_steps_; }
+        long int getTimeSteps() const { return time_steps_; }
 
         /**
          * @brief Gets the interest rate data.

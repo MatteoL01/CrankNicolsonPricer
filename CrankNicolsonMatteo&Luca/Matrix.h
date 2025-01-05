@@ -18,7 +18,7 @@ namespace m2 {
     public:
         // Constructors
         Matrix();
-        Matrix(unsigned int nl, unsigned int nc);
+        Matrix(long int nl, long int nc);
 
         // Destructor
         ~Matrix();
@@ -31,8 +31,8 @@ namespace m2 {
         int get_nc() const;
 
         // Access operators
-        double operator()(unsigned int i, unsigned int j) const;
-        double& operator()(unsigned int i, unsigned int j);
+        double operator()(long int i, long int j) const;
+        double& operator()(long int i, long int j);
 
         // Assignment operator
         Matrix& operator=(const Matrix& m1);

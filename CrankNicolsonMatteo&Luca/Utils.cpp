@@ -44,11 +44,11 @@ namespace m2 {
         }
     }
 
-    float max(float a, float b) {
+    double max(double a, double b) {
         return (a > b) ? a : b;
     }
 
-    float interpolateRate(double t, const std::vector<std::pair<double, double>>& rates) {
+    double interpolateRate(double t, const std::vector<std::pair<double, double>>& rates) {
         if (t < rates.front().first) {
             return rates.front().second; // Clamp to the first rate
         }
@@ -57,10 +57,10 @@ namespace m2 {
         }
         for (size_t i = 0; i < rates.size() - 1; i++) {
             if (t >= rates[i].first && t <= rates[i + 1].first) {
-                float t1 = rates[i].first;
-                float t2 = rates[i + 1].first;
-                float r1 = rates[i].second;
-                float r2 = rates[i + 1].second;
+                double t1 = rates[i].first;
+                double t2 = rates[i + 1].first;
+                double r1 = rates[i].second;
+                double r2 = rates[i + 1].second;
                 return r1 + (t - t1) / (t2 - t1) * (r2 - r1); // Linear interpolation
             }
         }
@@ -78,7 +78,7 @@ namespace m2 {
         return lhs;
     }
 
-    void crout(const Matrix& T2, const std::vector<double>& W, std::vector<double>& V, int M) {
+    void crout(const Matrix& T2, const std::vector<double>& W, std::vector<double>& V, long int M) {
         M = M - 1; // we want dimension M - 1
 
         Matrix L(M, M), U(M, M);
@@ -87,7 +87,7 @@ namespace m2 {
 
         L(0, 0) = T2(0, 0);
         U(0, 1) = T2(0, 1) / L(0, 0);
-        for (unsigned int i = 1; i < (M - 1); i++) {
+        for (long int i = 1; i < (M - 1); i++) {
             L(i, i - 1) = T2(i, i - 1);
             L(i, i) = T2(i, i) - L(i, i - 1) * U(i - 1, i);
             U(i, i + 1) = T2(i, i + 1) / L(i, i);
@@ -99,14 +99,14 @@ namespace m2 {
         // solve the system
         // first solve Lz = b for z, where z = U V
         Z[0] = W[0];
-        for (unsigned int i = 1; i < M; i++)
+        for (long int i = 1; i < M; i++)
         {
             Z[i] = (W[i] - L(i, i - 1) * Z[i - 1]) / L(i, i);
         }
 
         // solve U V = Z
         V[M - 1] = Z[M - 1];
-        for (int i = (M - 2); i >= 0; i--)
+        for (long int i = (M - 2); i >= 0; i--)
         {
             V[i] = Z[i] - U(i, i + 1) * V[i + 1];
         }

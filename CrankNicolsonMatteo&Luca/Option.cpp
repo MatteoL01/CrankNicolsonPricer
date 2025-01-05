@@ -52,7 +52,7 @@ namespace m2 {
             std::getline(file, line); M_ = std::stoi(line);
             std::getline(file, line); S0_ = std::stod(line);
             std::getline(file, line); sigma_ = std::stod(line);
-            std::getline(file, line); time_steps_ = std::stoul(line);
+            std::getline(file, line); time_steps_ = std::stoi(line);
 
             // Clear and read rates
             rates_.clear();

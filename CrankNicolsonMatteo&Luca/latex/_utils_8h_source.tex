@@ -1,0 +1,51 @@
+\doxysection{Utils.\+h}
+\hypertarget{_utils_8h_source}{}\label{_utils_8h_source}\mbox{\hyperlink{_utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Diffmethod.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}Matrix.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#ifndef\ M\_PI}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ M\_PI\ 3.14159265358979323846}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifndef\ M\_SQRT1\_2}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ M\_SQRT1\_2\ 0.70710678118654752440}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }m2\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{double}\ normalCDF(\textcolor{keywordtype}{double}\ x);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{double}\ normalPDF(\textcolor{keywordtype}{double}\ d);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{double}\ blackScholesPrice(\textcolor{keywordtype}{bool}\ isCall,\ \textcolor{keywordtype}{double}\ S,\ \textcolor{keywordtype}{double}\ K,\ \textcolor{keywordtype}{double}\ T,\ \textcolor{keywordtype}{double}\ r,\ \textcolor{keywordtype}{double}\ sigma);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{float}\ max(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{float}\ interpolateRate(\textcolor{keywordtype}{double}\ t,\ \textcolor{keyword}{const}\ std::vector<std::pair<double,\ double>>\&\ rates);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00087\ \ \ \ \ std::vector<double>\&\ operator+=(std::vector<double>\&\ lhs,\ \textcolor{keyword}{const}\ std::vector<double>\&\ rhs);}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ crout(\textcolor{keyword}{const}\ Matrix\&\ T2,\ \textcolor{keyword}{const}\ std::vector<double>\&\ W,\ std::vector<double>\&\ V,\ \textcolor{keywordtype}{int}\ M);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{double}\ computeAverageRate(\textcolor{keyword}{const}\ std::vector<std::pair<double,\ double>>\&\ rates,\ \textcolor{keywordtype}{double}\ T);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ writeOutputTxt(\textcolor{keywordtype}{double}\ price,\ \textcolor{keywordtype}{double}\ delta,\ \textcolor{keywordtype}{double}\ gamma,\ \textcolor{keywordtype}{double}\ theta,\ \textcolor{keywordtype}{double}\ vega,\ \textcolor{keywordtype}{double}\ rho,\ \textcolor{keyword}{const}\ std::vector<double>\&\ T0prices,\ \textcolor{keyword}{const}\ std::vector<double>\&\ T0deltas,\ \textcolor{keyword}{const}\ std::vector<double>\&\ boundaries);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \}\ \textcolor{comment}{//\ namespace\ m2}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
+
+\end{DoxyCode}

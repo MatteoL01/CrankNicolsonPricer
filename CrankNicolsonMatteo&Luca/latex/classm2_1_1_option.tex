@@ -1,0 +1,258 @@
+\doxysection{m2\+::Option Class Reference}
+\hypertarget{classm2_1_1_option}{}\label{classm2_1_1_option}\index{m2::Option@{m2::Option}}
+
+
+Represents a financial option and provides utilities for option pricing.  
+
+
+
+
+{\ttfamily \#include $<$Option.\+h$>$}
+
+Inheritance diagram for m2\+::Option\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classm2_1_1_option}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classm2_1_1_option_ad9e778ec563935aef5363a5a7a5a375c}\label{classm2_1_1_option_ad9e778ec563935aef5363a5a7a5a375c} 
+{\bfseries Option} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. Initializes the option with default parameters. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classm2_1_1_option_a03f6beeb19f55f1774c2ee59c45b4778}{open\+Input}} (const std\+::string \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Loads option parameters from an input file. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_afbd29e3d1c8ccc4208ac6713d6d852e3}\label{classm2_1_1_option_afbd29e3d1c8ccc4208ac6713d6d852e3} 
+void {\bfseries print\+Parameters} () const
+\begin{DoxyCompactList}\small\item\em Prints the option parameters to the standard output. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classm2_1_1_option_a4f0b5d6c553f7fb424456d9fe7506359}{get\+Call\+Put}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether the option is a call or put. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classm2_1_1_option_addc7510833a47f44139872c04a0e6ea8}{get\+American}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether the option is \doxylink{classm2_1_1_american}{American} or \doxylink{classm2_1_1_european}{European}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_ab3f8c17598b4e73522df1becff942a36}{getT}} () const
+\begin{DoxyCompactList}\small\item\em Gets the maturity date of the option. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_ad291dc8696737af03073f35a791d1789}{getK}} () const
+\begin{DoxyCompactList}\small\item\em Gets the strike price of the option. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_a9e205b0cd47d0f3fab6cb04ecd862c62}{get\+S0}} () const
+\begin{DoxyCompactList}\small\item\em Gets the initial price of the underlying asset. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_a4057661807b30c2feaa62741b6bc9c0a}{get\+Sigma}} () const
+\begin{DoxyCompactList}\small\item\em Gets the volatility of the underlying asset. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_ae8becd57d7a639c6d786af353d910047}{get\+Time\+Discr}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of time discretization steps. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_ae6717e1e6a1035f83c5ae43f6ed6eef9}{get\+Spot\+Discr}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of spot discretization steps. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_a5e6e2b67eb1c0871534286059c0ed634}{get\+Time\+Steps}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of time steps for interest rate discretization. \end{DoxyCompactList}\item 
+const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \& \mbox{\hyperlink{classm2_1_1_option_a69a81a7c28471ca19a3e08a463df11a3}{get\+Rates}} () const
+\begin{DoxyCompactList}\small\item\em Gets the interest rate data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classm2_1_1_option_ae8ab1b9c9918d89a67e150e417fbe83f}{validate\+Input}} ()
+\begin{DoxyCompactList}\small\item\em Validates the input parameters for the option. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classm2_1_1_option_a0181d8efffa1a2791457c3da6253a4bc}\label{classm2_1_1_option_a0181d8efffa1a2791457c3da6253a4bc} 
+bool {\bfseries call\+\_\+}
+\begin{DoxyCompactList}\small\item\em True for a call option, false for a put option. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a3f4aef38e96abde8aed651a9f0a5a1c0}\label{classm2_1_1_option_a3f4aef38e96abde8aed651a9f0a5a1c0} 
+bool {\bfseries american\+\_\+}
+\begin{DoxyCompactList}\small\item\em True for an \doxylink{classm2_1_1_american}{American} option, false for a \doxylink{classm2_1_1_european}{European} option. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a5acc55b9d9aa95cf8543213aa7e51944}\label{classm2_1_1_option_a5acc55b9d9aa95cf8543213aa7e51944} 
+double {\bfseries T\+\_\+}
+\begin{DoxyCompactList}\small\item\em Maturity date of the option (in years). \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_aca9a56f7795a230216474779ebf99265}\label{classm2_1_1_option_aca9a56f7795a230216474779ebf99265} 
+double {\bfseries K\+\_\+}
+\begin{DoxyCompactList}\small\item\em Strike price of the option. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a8d59ff20498f26dc9bb2e0da484d2593}\label{classm2_1_1_option_a8d59ff20498f26dc9bb2e0da484d2593} 
+unsigned int {\bfseries N\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of time discretization steps. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_ae4faa52914f7e39f57e4a49b8f7a6bbd}\label{classm2_1_1_option_ae4faa52914f7e39f57e4a49b8f7a6bbd} 
+unsigned int {\bfseries M\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of spot discretization steps. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}\label{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d} 
+double {\bfseries S0\+\_\+}
+\begin{DoxyCompactList}\small\item\em Initial price of the underlying asset. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a3665259024b25e7e043c1218f7011e62}\label{classm2_1_1_option_a3665259024b25e7e043c1218f7011e62} 
+double {\bfseries sigma\+\_\+}
+\begin{DoxyCompactList}\small\item\em Volatility of the underlying asset. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a6ed6c11a6a0dfec039203715961b5f7b}\label{classm2_1_1_option_a6ed6c11a6a0dfec039203715961b5f7b} 
+unsigned int {\bfseries time\+\_\+steps\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of steps for interest rate discretization. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_option_a99b00465e97b5bd5f9731a55c77a5a0e}\label{classm2_1_1_option_a99b00465e97b5bd5f9731a55c77a5a0e} 
+std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ {\bfseries rates\+\_\+}
+\begin{DoxyCompactList}\small\item\em Interest rates as pairs of (time, rate). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a financial option and provides utilities for option pricing. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classm2_1_1_option_addc7510833a47f44139872c04a0e6ea8}\index{m2::Option@{m2::Option}!getAmerican@{getAmerican}}
+\index{getAmerican@{getAmerican}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getAmerican()}{getAmerican()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_addc7510833a47f44139872c04a0e6ea8} 
+bool m2\+::\+Option\+::get\+American (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks whether the option is \doxylink{classm2_1_1_american}{American} or \doxylink{classm2_1_1_european}{European}. 
+
+\begin{DoxyReturn}{Returns}
+True for an \doxylink{classm2_1_1_american}{American} option, false for a \doxylink{classm2_1_1_european}{European} option. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a4f0b5d6c553f7fb424456d9fe7506359}\index{m2::Option@{m2::Option}!getCallPut@{getCallPut}}
+\index{getCallPut@{getCallPut}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getCallPut()}{getCallPut()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a4f0b5d6c553f7fb424456d9fe7506359} 
+bool m2\+::\+Option\+::get\+Call\+Put (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks whether the option is a call or put. 
+
+\begin{DoxyReturn}{Returns}
+True for a call option, false for a put option. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_ad291dc8696737af03073f35a791d1789}\index{m2::Option@{m2::Option}!getK@{getK}}
+\index{getK@{getK}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getK()}{getK()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_ad291dc8696737af03073f35a791d1789} 
+double m2\+::\+Option\+::getK (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the strike price of the option. 
+
+\begin{DoxyReturn}{Returns}
+Strike price. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a69a81a7c28471ca19a3e08a463df11a3}\index{m2::Option@{m2::Option}!getRates@{getRates}}
+\index{getRates@{getRates}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getRates()}{getRates()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a69a81a7c28471ca19a3e08a463df11a3} 
+const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \& m2\+::\+Option\+::get\+Rates (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the interest rate data. 
+
+\begin{DoxyReturn}{Returns}
+A vector of pairs, where each pair contains (time, rate). 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a9e205b0cd47d0f3fab6cb04ecd862c62}\index{m2::Option@{m2::Option}!getS0@{getS0}}
+\index{getS0@{getS0}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getS0()}{getS0()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a9e205b0cd47d0f3fab6cb04ecd862c62} 
+double m2\+::\+Option\+::get\+S0 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the initial price of the underlying asset. 
+
+\begin{DoxyReturn}{Returns}
+Initial price of the underlying. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a4057661807b30c2feaa62741b6bc9c0a}\index{m2::Option@{m2::Option}!getSigma@{getSigma}}
+\index{getSigma@{getSigma}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getSigma()}{getSigma()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a4057661807b30c2feaa62741b6bc9c0a} 
+double m2\+::\+Option\+::get\+Sigma (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the volatility of the underlying asset. 
+
+\begin{DoxyReturn}{Returns}
+Volatility as a double. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_ae6717e1e6a1035f83c5ae43f6ed6eef9}\index{m2::Option@{m2::Option}!getSpotDiscr@{getSpotDiscr}}
+\index{getSpotDiscr@{getSpotDiscr}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getSpotDiscr()}{getSpotDiscr()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_ae6717e1e6a1035f83c5ae43f6ed6eef9} 
+unsigned int m2\+::\+Option\+::get\+Spot\+Discr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of spot discretization steps. 
+
+\begin{DoxyReturn}{Returns}
+Number of spot steps. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_ab3f8c17598b4e73522df1becff942a36}\index{m2::Option@{m2::Option}!getT@{getT}}
+\index{getT@{getT}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getT()}{getT()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_ab3f8c17598b4e73522df1becff942a36} 
+double m2\+::\+Option\+::getT (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the maturity date of the option. 
+
+\begin{DoxyReturn}{Returns}
+Maturity date in years. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_ae8becd57d7a639c6d786af353d910047}\index{m2::Option@{m2::Option}!getTimeDiscr@{getTimeDiscr}}
+\index{getTimeDiscr@{getTimeDiscr}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getTimeDiscr()}{getTimeDiscr()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_ae8becd57d7a639c6d786af353d910047} 
+unsigned int m2\+::\+Option\+::get\+Time\+Discr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of time discretization steps. 
+
+\begin{DoxyReturn}{Returns}
+Number of time steps. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a5e6e2b67eb1c0871534286059c0ed634}\index{m2::Option@{m2::Option}!getTimeSteps@{getTimeSteps}}
+\index{getTimeSteps@{getTimeSteps}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{getTimeSteps()}{getTimeSteps()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a5e6e2b67eb1c0871534286059c0ed634} 
+unsigned int m2\+::\+Option\+::get\+Time\+Steps (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the number of time steps for interest rate discretization. 
+
+\begin{DoxyReturn}{Returns}
+Number of interest rate steps. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_option_a03f6beeb19f55f1774c2ee59c45b4778}\index{m2::Option@{m2::Option}!openInput@{openInput}}
+\index{openInput@{openInput}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{openInput()}{openInput()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_a03f6beeb19f55f1774c2ee59c45b4778} 
+void m2\+::\+Option\+::open\+Input (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+Path}{}\end{DoxyParamCaption})}
+
+
+
+Loads option parameters from an input file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & Path to the input file containing option parameters. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classm2_1_1_option_ae8ab1b9c9918d89a67e150e417fbe83f}\index{m2::Option@{m2::Option}!validateInput@{validateInput}}
+\index{validateInput@{validateInput}!m2::Option@{m2::Option}}
+\doxysubsubsection{\texorpdfstring{validateInput()}{validateInput()}}
+{\footnotesize\ttfamily \label{classm2_1_1_option_ae8ab1b9c9918d89a67e150e417fbe83f} 
+void m2\+::\+Option\+::validate\+Input (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Validates the input parameters for the option. 
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & if parameters are invalid. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Option.\+h\item 
+Option.\+cpp\end{DoxyCompactItemize}

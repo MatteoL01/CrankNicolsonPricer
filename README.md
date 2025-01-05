@@ -15,13 +15,19 @@ This repository implements financial option pricing models, including the Crank-
 
 ## Overview
 
-This project provides tools for:
-- Pricing European and American options using the Crank-Nicolson method.
-- Computing the Greeks (\(\Delta\), \(\Gamma\), \(\Theta\), \(\rho\), \(\nu\)).
-- Using the Black-Scholes model as a benchmark.
-- Handling piecewise interest rate structures with linear interpolation.
+This project provides a comprehensive framework for option pricing and financial modeling, utilizing an Excel-based user interface for streamlined input handling and output visualization. The key features include:
 
-It supports both user-defined parameters and default settings, making it adaptable for financial modeling tasks.
+- **Excel-Based User Interface**  
+  Users can input option parameters (e.g., strike price, volatility, maturity) directly into an Excel file. The calculated results, including option prices and Greeks (\(\Delta\), \(\Gamma\), \(\Theta\), \(\rho\), \(\nu\)), are displayed in Excel for easy analysis and interpretation.
+
+- **Crank-Nicolson Method**  
+  Implements the finite difference method to accurately price European and American options.
+
+- **Black-Scholes Model**  
+  Provides a benchmark by calculating exact prices for European options using the Black-Scholes formula.
+
+- **Piecewise Interest Rate Handling**  
+  Supports scenarios where interest rates change over time by using linear interpolation to model the rate structure.
 
 ---
 
@@ -32,9 +38,8 @@ It supports both user-defined parameters and default settings, making it adaptab
 - **Utility Functions**:
   - Cumulative and probability density functions for the normal distribution.
   - Linear interpolation of interest rates.
-  - Boundary condition handling for numerical methods.
-- **Output**: Results are exported to a text file for easy analysis.
-- **Modular Design**: Clear separation of functionality with reusable components.
+  - Crout algorithm to solve the matrix system.
+- **Output**: Results are exported to an Excel sheet.
 
 ---
 
@@ -53,17 +58,18 @@ Run the following code on the terminal:
 option-pricing/
 │
 ├── include/
+│   ├── Option.h            # Header for the general option class
 │   ├── Diffmethod.h        # Header for finite difference methods
 │   ├── Matrix.h            # Matrix operations header
 │   └── utils.h             # Utility functions
 │
 ├── src/
+│   ├── Option.h            # Implementation of the general option class
 │   ├── Diffmethod.cpp      # Implementation of finite difference methods
 │   ├── Matrix.cpp          # Implementation of matrix operations
 │   └── utils.cpp           # Implementation of utility functions
 │
 ├── main.cpp                # Main entry point for the program
-├── CMakeLists.txt          # Build configuration for CMake
 └── README.md               # Project documentation
 
 

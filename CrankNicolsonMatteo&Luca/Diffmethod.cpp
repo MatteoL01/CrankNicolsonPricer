@@ -8,7 +8,7 @@ namespace m2
         dt_ = T_ / N_;
 
         // Maximum stock price, determined by whether it's a call or put option
-        call_ ? Smax_ = S0_ * 3 : Smax_ = K_ * 2;
+        call_ ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
 
         // Stock price step size
         ds_ = Smax_ / M_;
@@ -222,7 +222,7 @@ namespace m2
         }
 
         unsigned int pos = S0_ / ds_;
-        price_ = values_(N_, pos );
+        price_ = values_(N_, pos - 1 );
 
         for (unsigned int i = 0; i < T0prices_.size(); i++)
         {

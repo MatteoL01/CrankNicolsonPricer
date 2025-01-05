@@ -1,0 +1,61 @@
+\doxysection{Matrix.\+h}
+\hypertarget{_matrix_8h_source}{}\label{_matrix_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MATRIX\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MATRIX\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }m2\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nl\_;\ \ \textcolor{comment}{//\ number\ of\ rows}}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nc\_;\ \ \textcolor{comment}{//\ number\ of\ columns}}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ std::vector<double>\ data\_;\ \ \textcolor{comment}{//\ stores\ matrix\ elements\ in\ a\ single\ 1D\ array}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ nl,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ nc);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Destructor}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{\string~Matrix}}();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ constructor}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getter\ methods}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_nl()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_nc()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Access\ operators}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ operator()(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\&\ operator()(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Assignment\ operator}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Stream\ output\ operator}}
+\DoxyCodeLine{00043\ \ \ \ \ std::ostream\&\ operator<<(std::ostream\&\ st,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Matrix\ arithmetic\ operators}}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ operator+(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m2);}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m2);}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ d);}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ operator*(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ d,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ m1);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Matrix-\/vector\ multiplication\ operator}}
+\DoxyCodeLine{00052\ \ \ \ \ std::vector<double>\ operator*(\textcolor{keyword}{const}\ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\&\ mat,\ \textcolor{keyword}{const}\ std::vector<double>\&\ vec);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \}\ \textcolor{comment}{//\ namespace\ m2}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !MATRIX\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,206 @@
+\doxysection{m2\+::American Class Reference}
+\hypertarget{classm2_1_1_american}{}\label{classm2_1_1_american}\index{m2::American@{m2::American}}
+
+
+Represents an \doxylink{classm2_1_1_american}{American} option and provides methods for pricing and calculating Greeks.  
+
+
+
+
+{\ttfamily \#include $<$Diffmethod.\+h$>$}
+
+Inheritance diagram for m2\+::American\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classm2_1_1_american}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classm2_1_1_american_a288e67e14ec9a81ffee219ea7d994ea7}{American}} (\mbox{\hyperlink{classm2_1_1_option}{Option}} \&opt)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxylink{classm2_1_1_american}{American} option using the given \doxylink{classm2_1_1_option}{Option} object. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a1403a8fc2a4a90208e56d4c80466b7ed}\label{classm2_1_1_american_a1403a8fc2a4a90208e56d4c80466b7ed} 
+void {\bfseries price\+Call} ()
+\begin{DoxyCompactList}\small\item\em Prices the \doxylink{classm2_1_1_american}{American} call option. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a3a91ab2547aee52f1659ed1b647ade31}\label{classm2_1_1_american_a3a91ab2547aee52f1659ed1b647ade31} 
+void {\bfseries price\+Put} ()
+\begin{DoxyCompactList}\small\item\em Prices the \doxylink{classm2_1_1_american}{American} put option. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a86ce87dbe49925f5c9c3866e6dec71be}\label{classm2_1_1_american_a86ce87dbe49925f5c9c3866e6dec71be} 
+void {\bfseries calculate\+Delta} ()
+\begin{DoxyCompactList}\small\item\em Calculates the Delta (rate of change of price with respect to underlying). \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_aa24c0b267ed485da754c6a3cefa84cf9}\label{classm2_1_1_american_aa24c0b267ed485da754c6a3cefa84cf9} 
+void {\bfseries calculate\+Gamma} ()
+\begin{DoxyCompactList}\small\item\em Calculates the Gamma (rate of change of Delta with respect to underlying). \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a18c1e73c3bf3a926046cf2628451ecb8}\label{classm2_1_1_american_a18c1e73c3bf3a926046cf2628451ecb8} 
+void {\bfseries calculate\+Theta} ()
+\begin{DoxyCompactList}\small\item\em Calculates the Theta (rate of change of price with respect to time). \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a5123c079f98aa6316375a6de2d01cffa}\label{classm2_1_1_american_a5123c079f98aa6316375a6de2d01cffa} 
+void {\bfseries calculate\+Vega} ()
+\begin{DoxyCompactList}\small\item\em Calculates the Vega (rate of change of price with respect to volatility). \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_a8220865d06b0b8294d68d60bcd03896f}\label{classm2_1_1_american_a8220865d06b0b8294d68d60bcd03896f} 
+void {\bfseries calculate\+Rho} ()
+\begin{DoxyCompactList}\small\item\em Calculates the Rho (rate of change of price with respect to interest rate). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classm2_1_1_matrix}{Matrix}} \mbox{\hyperlink{classm2_1_1_american_af94381b940a1aa418345e0314c2642c9}{get\+\_\+val}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the matrix of option values. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_american_a8df40ff475f4c8f82fdc1017816a8149}{get\+Price}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the final price of the \doxylink{classm2_1_1_american}{American} option. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classm2_1_1_american_a9c3e2d351990871c01caa6ca3212f177}{get\+T0prices}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves option prices at T0 for varying spot prices. \end{DoxyCompactList}\item 
+\Hypertarget{classm2_1_1_american_ab17db9e159846a0628130ad7911fccff}\label{classm2_1_1_american_ab17db9e159846a0628130ad7911fccff} 
+std\+::vector$<$ double $>$ {\bfseries get\+Delta\+Graph} () const
+\item 
+\Hypertarget{classm2_1_1_american_a248ace85a704726a4310126782cff828}\label{classm2_1_1_american_a248ace85a704726a4310126782cff828} 
+double {\bfseries get\+Delta} () const
+\item 
+\Hypertarget{classm2_1_1_american_a563ec8cc52c61aa294bbfc6605b6d1fb}\label{classm2_1_1_american_a563ec8cc52c61aa294bbfc6605b6d1fb} 
+std\+::vector$<$ double $>$ {\bfseries get\+Gamma\+Graph} () const
+\item 
+\Hypertarget{classm2_1_1_american_abdf7271c779a526353ee8f83a3330684}\label{classm2_1_1_american_abdf7271c779a526353ee8f83a3330684} 
+double {\bfseries get\+Gamma} () const
+\item 
+\Hypertarget{classm2_1_1_american_a8ea951b3c6c762c98fdec7931be4a131}\label{classm2_1_1_american_a8ea951b3c6c762c98fdec7931be4a131} 
+std\+::vector$<$ double $>$ {\bfseries get\+Theta\+Graph} () const
+\item 
+\Hypertarget{classm2_1_1_american_ae0809888df46fe7a38a48356f9059cef}\label{classm2_1_1_american_ae0809888df46fe7a38a48356f9059cef} 
+double {\bfseries get\+Theta} () const
+\item 
+\Hypertarget{classm2_1_1_american_a64e6461fe84d9ad7c4dcfe85e8e22e50}\label{classm2_1_1_american_a64e6461fe84d9ad7c4dcfe85e8e22e50} 
+double {\bfseries get\+Vega} () const
+\item 
+\Hypertarget{classm2_1_1_american_a15a2288c1f26ce4ca87b19d8cbe3c703}\label{classm2_1_1_american_a15a2288c1f26ce4ca87b19d8cbe3c703} 
+double {\bfseries get\+Rho} () const
+\item 
+\Hypertarget{classm2_1_1_american_adfc86e551e2bba206234a02eb29e2af0}\label{classm2_1_1_american_adfc86e551e2bba206234a02eb29e2af0} 
+std\+::vector$<$ double $>$ {\bfseries get\+Bound} () const
+\item 
+\Hypertarget{classm2_1_1_american_ada07b794101ab2228b69eed0ea4957d7}\label{classm2_1_1_american_ada07b794101ab2228b69eed0ea4957d7} 
+void {\bfseries print\+Matrix} () const
+\begin{DoxyCompactList}\small\item\em Prints the matrix of option values to the console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classm2_1_1_option}{m2\+::\+Option}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Option} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. Initializes the option with default parameters. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classm2_1_1_option_a03f6beeb19f55f1774c2ee59c45b4778}{open\+Input}} (const std\+::string \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Loads option parameters from an input file. \end{DoxyCompactList}\item 
+void {\bfseries print\+Parameters} () const
+\begin{DoxyCompactList}\small\item\em Prints the option parameters to the standard output. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classm2_1_1_option_a4f0b5d6c553f7fb424456d9fe7506359}{get\+Call\+Put}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether the option is a call or put. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classm2_1_1_option_addc7510833a47f44139872c04a0e6ea8}{get\+American}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether the option is \doxylink{classm2_1_1_american}{American} or \doxylink{classm2_1_1_european}{European}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_ab3f8c17598b4e73522df1becff942a36}{getT}} () const
+\begin{DoxyCompactList}\small\item\em Gets the maturity date of the option. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_ad291dc8696737af03073f35a791d1789}{getK}} () const
+\begin{DoxyCompactList}\small\item\em Gets the strike price of the option. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_a9e205b0cd47d0f3fab6cb04ecd862c62}{get\+S0}} () const
+\begin{DoxyCompactList}\small\item\em Gets the initial price of the underlying asset. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classm2_1_1_option_a4057661807b30c2feaa62741b6bc9c0a}{get\+Sigma}} () const
+\begin{DoxyCompactList}\small\item\em Gets the volatility of the underlying asset. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_ae8becd57d7a639c6d786af353d910047}{get\+Time\+Discr}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of time discretization steps. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_ae6717e1e6a1035f83c5ae43f6ed6eef9}{get\+Spot\+Discr}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of spot discretization steps. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classm2_1_1_option_a5e6e2b67eb1c0871534286059c0ed634}{get\+Time\+Steps}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of time steps for interest rate discretization. \end{DoxyCompactList}\item 
+const std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ \& \mbox{\hyperlink{classm2_1_1_option_a69a81a7c28471ca19a3e08a463df11a3}{get\+Rates}} () const
+\begin{DoxyCompactList}\small\item\em Gets the interest rate data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classm2_1_1_option}{m2\+::\+Option}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classm2_1_1_option_ae8ab1b9c9918d89a67e150e417fbe83f}{validate\+Input}} ()
+\begin{DoxyCompactList}\small\item\em Validates the input parameters for the option. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classm2_1_1_option}{m2\+::\+Option}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries call\+\_\+}
+\begin{DoxyCompactList}\small\item\em True for a call option, false for a put option. \end{DoxyCompactList}\item 
+bool {\bfseries american\+\_\+}
+\begin{DoxyCompactList}\small\item\em True for an \doxylink{classm2_1_1_american}{American} option, false for a \doxylink{classm2_1_1_european}{European} option. \end{DoxyCompactList}\item 
+double {\bfseries T\+\_\+}
+\begin{DoxyCompactList}\small\item\em Maturity date of the option (in years). \end{DoxyCompactList}\item 
+double {\bfseries K\+\_\+}
+\begin{DoxyCompactList}\small\item\em Strike price of the option. \end{DoxyCompactList}\item 
+unsigned int {\bfseries N\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of time discretization steps. \end{DoxyCompactList}\item 
+unsigned int {\bfseries M\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of spot discretization steps. \end{DoxyCompactList}\item 
+double {\bfseries S0\+\_\+}
+\begin{DoxyCompactList}\small\item\em Initial price of the underlying asset. \end{DoxyCompactList}\item 
+double {\bfseries sigma\+\_\+}
+\begin{DoxyCompactList}\small\item\em Volatility of the underlying asset. \end{DoxyCompactList}\item 
+unsigned int {\bfseries time\+\_\+steps\+\_\+}
+\begin{DoxyCompactList}\small\item\em Number of steps for interest rate discretization. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::pair$<$ double, double $>$ $>$ {\bfseries rates\+\_\+}
+\begin{DoxyCompactList}\small\item\em Interest rates as pairs of (time, rate). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an \doxylink{classm2_1_1_american}{American} option and provides methods for pricing and calculating Greeks. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classm2_1_1_american_a288e67e14ec9a81ffee219ea7d994ea7}\index{m2::American@{m2::American}!American@{American}}
+\index{American@{American}!m2::American@{m2::American}}
+\doxysubsubsection{\texorpdfstring{American()}{American()}}
+{\footnotesize\ttfamily \label{classm2_1_1_american_a288e67e14ec9a81ffee219ea7d994ea7} 
+m2\+::\+American\+::\+American (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classm2_1_1_option}{Option}} \&}]{opt}{}\end{DoxyParamCaption})}
+
+
+
+Constructs an \doxylink{classm2_1_1_american}{American} option using the given \doxylink{classm2_1_1_option}{Option} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em opt} & \doxylink{classm2_1_1_option}{Option} object with parameters. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classm2_1_1_american_af94381b940a1aa418345e0314c2642c9}\index{m2::American@{m2::American}!get\_val@{get\_val}}
+\index{get\_val@{get\_val}!m2::American@{m2::American}}
+\doxysubsubsection{\texorpdfstring{get\_val()}{get\_val()}}
+{\footnotesize\ttfamily \label{classm2_1_1_american_af94381b940a1aa418345e0314c2642c9} 
+\mbox{\hyperlink{classm2_1_1_matrix}{Matrix}} m2\+::\+American\+::get\+\_\+val (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the matrix of option values. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{classm2_1_1_matrix}{Matrix} of values. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_american_a8df40ff475f4c8f82fdc1017816a8149}\index{m2::American@{m2::American}!getPrice@{getPrice}}
+\index{getPrice@{getPrice}!m2::American@{m2::American}}
+\doxysubsubsection{\texorpdfstring{getPrice()}{getPrice()}}
+{\footnotesize\ttfamily \label{classm2_1_1_american_a8df40ff475f4c8f82fdc1017816a8149} 
+double m2\+::\+American\+::get\+Price (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the final price of the \doxylink{classm2_1_1_american}{American} option. 
+
+\begin{DoxyReturn}{Returns}
+Price of the option. 
+\end{DoxyReturn}
+\Hypertarget{classm2_1_1_american_a9c3e2d351990871c01caa6ca3212f177}\index{m2::American@{m2::American}!getT0prices@{getT0prices}}
+\index{getT0prices@{getT0prices}!m2::American@{m2::American}}
+\doxysubsubsection{\texorpdfstring{getT0prices()}{getT0prices()}}
+{\footnotesize\ttfamily \label{classm2_1_1_american_a9c3e2d351990871c01caa6ca3212f177} 
+std\+::vector$<$ double $>$ m2\+::\+American\+::get\+T0prices (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves option prices at T0 for varying spot prices. 
+
+\begin{DoxyReturn}{Returns}
+Vector of prices. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Diffmethod.\+h\item 
+Diffmethod.\+cpp\end{DoxyCompactItemize}

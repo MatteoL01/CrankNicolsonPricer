@@ -1,0 +1,142 @@
+\doxysection{Diffmethod.\+h}
+\hypertarget{_diffmethod_8h_source}{}\label{_diffmethod_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DIFFMETHOD\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DIFFMETHOD\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Matrix.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Option.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_utils_8h}{Utils.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }m2}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classm2_1_1_american}{American}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classm2_1_1_option}{Option}}}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ values\_;\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\_;\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ds\_;\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ Smax\_;\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ price\_;\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ std::vector<double>\ T0prices\_;\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ optionPrice\_;\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ std::vector<double>\ delta\_;\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::vector<double>\ gamma\_;\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::vector<double>\ theta\_;\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ vega\_;\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rho\_;\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::vector<double>\ boundary\_;\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_american_a288e67e14ec9a81ffee219ea7d994ea7}{American}}(\mbox{\hyperlink{classm2_1_1_option}{Option}}\ \&\ opt);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a1403a8fc2a4a90208e56d4c80466b7ed}{priceCall}}();}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a3a91ab2547aee52f1659ed1b647ade31}{pricePut}}();}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a86ce87dbe49925f5c9c3866e6dec71be}{calculateDelta}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_aa24c0b267ed485da754c6a3cefa84cf9}{calculateGamma}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a18c1e73c3bf3a926046cf2628451ecb8}{calculateTheta}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a5123c079f98aa6316375a6de2d01cffa}{calculateVega}}();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_a8220865d06b0b8294d68d60bcd03896f}{calculateRho}}();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ \mbox{\hyperlink{classm2_1_1_american_af94381b940a1aa418345e0314c2642c9}{get\_val}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ values\_;\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classm2_1_1_american_a8df40ff475f4c8f82fdc1017816a8149}{getPrice}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ price\_;\}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{classm2_1_1_american_a9c3e2d351990871c01caa6ca3212f177}{getT0prices}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ T0prices\_;\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Greeks}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ std::vector<double>\ getDeltaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ delta\_;\ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getDelta()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ delta\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ std::vector<double>\ getGammaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ gamma\_;\ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getGamma()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ gamma\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ std::vector<double>\ getThetaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ theta\_;\ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getTheta()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ theta\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getVega()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ vega\_;\ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getRho()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ rho\_;\ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Boundaries}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ std::vector<double>\ getBound()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ boundary\_;\ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_american_ada07b794101ab2228b69eed0ea4957d7}{printMatrix}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Matrix\ Values:\ \(\backslash\)n"{}}\ <<\ values\_\ <<\ std::endl;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classm2_1_1_european}{European}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classm2_1_1_option}{Option}}}
+\DoxyCodeLine{00124\ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ values\_;\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dt\_;\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ds\_;\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ Smax\_;\ }
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ price\_;\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ std::vector<double>\ T0prices\_;\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ optionPrice\_;\ }
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ std::vector<double>\ delta\_;\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ std::vector<double>\ gamma\_;\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ std::vector<double>\ theta\_;\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ vega\_;\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ rho\_;\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ std::vector<double>\ boundary\_;\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_european_ac0bd4596bee5897c9523a986652a9d8d}{European}}(\mbox{\hyperlink{classm2_1_1_option}{Option}}\&\ opt);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_aa8eaf846dd818b7ed40bbe9d0ba2f912}{priceCall}}();}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a78a65651f864bbbc41d5bddc577959a8}{pricePut}}();}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a2758e3bbbdfd3708d06be840b6b91c78}{calculateDelta}}();}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a371e72b2ae78307fb9831e6392db2533}{calculateGamma}}();}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_acc6fc5b3e29d0c844c333c89c1406535}{calculateTheta}}();}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a07bbeaec42cea688e609b1f0dabee7a1}{calculateVega}}();}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a8dfc0c1ce2948d39eff31ce9f0c260a2}{calculateRho}}();}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classm2_1_1_matrix}{Matrix}}\ \mbox{\hyperlink{classm2_1_1_european_a03bc4c0529dac5a84b66cc889533fffc}{get\_val}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ values\_;\ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classm2_1_1_european_a4dbf4625cdc4440d4350b23ac8b7fb45}{getPrice}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ price\_;\ \}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ std::vector<double>\ \mbox{\hyperlink{classm2_1_1_european_ade70178cec3f4203fa27a3e2e9aa21b2}{getT0prices}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ T0prices\_;\ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Greeks}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ std::vector<double>\ getDeltaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ delta\_;\ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getDelta()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ delta\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ std::vector<double>\ getGammaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ gamma\_;\ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getGamma()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ gamma\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ std::vector<double>\ getThetaGraph()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ theta\_;\ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getTheta()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ theta\_[\mbox{\hyperlink{classm2_1_1_option_a6426654e61b469eab17865ee05f36a6d}{S0\_}}\ /\ ds\_];\ \}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getVega()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ vega\_;\ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ getRho()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ rho\_;\ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Boundaries}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ std::vector<double>\ getBound()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ boundary\_;\ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classm2_1_1_european_a92bdc6e17abaec1e8c3e51757271236d}{printMatrix}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Matrix\ Values:\ \(\backslash\)n"{}}\ <<\ values\_\ <<\ std::endl;}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \ \ \ \ \};}
+\DoxyCodeLine{00222\ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ !DIFFMETHOD\_H}}
+\DoxyCodeLine{00225\ }
+
+\end{DoxyCode}

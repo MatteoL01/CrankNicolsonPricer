@@ -54,22 +54,3 @@ Clone the repository:
 Run the following code on the terminal:
     g++ -std=c++17 -o option_pricing main.cpp Matrix.cpp Diffmethod.cpp utils.cpp
 
-## Project Structure
-'''option-pricing/
-│
-├── include/
-│   ├── Option.h            # Header for the general option class
-│   ├── Diffmethod.h        # Header for finite difference methods
-│   ├── Matrix.h            # Matrix operations header
-│   └── utils.h             # Utility functions
-│
-├── src/
-│   ├── Option.h            # Implementation of the general option class
-│   ├── Diffmethod.cpp      # Implementation of finite difference methods
-│   ├── Matrix.cpp          # Implementation of matrix operations
-│   └── utils.cpp           # Implementation of utility functions
-│
-├── main.cpp                # Main entry point for the program
-└── README.md               # Project documentation
-
-

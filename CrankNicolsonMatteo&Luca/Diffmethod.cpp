@@ -21,7 +21,7 @@ namespace m2
     European::European(Option& opt) : Option(opt), price_(0.0), T0prices_(M_ , 0.0), optionPrice_(0.0), delta_(M_, 0.0), gamma_(M_, 0.0), theta_(M_, 0.0), vega_(0.0), rho_(0.0), boundary_(N_, 0.0)
     {
         dt_ = T_ / N_;
-        call_ ? Smax_ = S0_ * 3 : Smax_ = K_ * 2;
+        call_ ? Smax_ = S0_ * 2 : Smax_ = K_ * 2;
         ds_ = Smax_ / M_;
 
         // initialize the matrix of price
@@ -331,8 +331,8 @@ namespace m2
         for (long int i = 0; i < (N_ + 1); i++)
         {
             // boundary condition asymptotic assumptions
-            values_(i, 0) = 0; // when S = 0 the values is equal to K
-            values_(i, M_ - 1) = (Smax_ - K_) * exp(-computeAverageRate(rates_, T_) * (T_ - dt_ * (N_ - i))); // when S = Smax the value is equal to [(S - K) * e^(-r(T-t))]
+            values_(i, 0) = 0; // when S = 0 the values is equal to 0
+            values_(i, M_ - 1) = Smax_ - K_; // when S = Smax the value is equal to S - K
         }
 
 
@@ -401,7 +401,7 @@ namespace m2
             crout(T2, W, V, M_);
 
             for (long int i = M_ - 2; i >= 0; i--) {
-                
+
                 V[i] = max(V[i], ds_ * (i + 1) - K_); // American call payoff
                 values_(N_ - n + 1, i) = max(V[i], 0); // Store updated values
             }
@@ -491,10 +491,16 @@ namespace m2
 
         sigma_ += epsilon;
 
-        if (call_) { priceCall(); }
-        else { pricePut(); }
+        if (call_) { 
+            priceCall();
+            vega_ = (values_(N_, S0_ / ds_ - 1) - optionPrice_) / epsilon;
+        }
+        else { 
+            pricePut(); 
+            vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        }
 
-        vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        
 
         sigma_ -= epsilon;
     }
@@ -506,10 +512,16 @@ namespace m2
 
         sigma_ += epsilon;
 
-        if (call_) { priceCall(); }
-        else { pricePut(); }
+        if (call_) { 
+            priceCall(); 
+            vega_ = (values_(N_, S0_ / ds_ - 1) - optionPrice_) / epsilon;
+        }
+        else {
+            pricePut(); 
+            vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        }
 
-        vega_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        
 
         sigma_ -= epsilon;
     }
@@ -524,12 +536,18 @@ namespace m2
             rates_[i].second += epsilon;
         }
 
-        if (call_) { priceCall(); }
-        else { pricePut(); }
+        if (call_) { 
+            priceCall();
+            rho_ = (values_(N_, S0_ / ds_ - 1) - optionPrice_) / epsilon;
+        }
+        else { 
+            pricePut(); 
+            rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        }
 
         //std::cout << "Price: " << values_(N_, S0_ / ds_) - optionPrice_ << std::endl;
 
-        rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        
     }
 
     void American::calculateRho()
@@ -541,10 +559,15 @@ namespace m2
             rates_[i].second += epsilon;
         }
 
-        if (call_) { priceCall(); }
-        else { pricePut(); }
+        if (call_) {
+            priceCall();
+            rho_ = (values_(N_, S0_ / ds_ - 1) - optionPrice_) / epsilon;
+        }
+        else {
+            pricePut();
+            rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
+        }
 
-        rho_ = (values_(N_, S0_ / ds_) - optionPrice_) / epsilon;
     }
 
 }
